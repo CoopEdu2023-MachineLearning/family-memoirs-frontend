@@ -1,6 +1,6 @@
 import DemoComponents from "@components/DemoComponents";
 import { useEffect, useState } from "react";
-import { Button } from "@douyinfe/semi-ui";
+import { Button } from "antd";
 import { demoApi } from "@apis";
 
 const DemoPage = ({ name }) => {
@@ -19,7 +19,7 @@ const DemoPage = ({ name }) => {
       <div className="title">
         {text + name}
       </div>
-      <Button>semi</Button>
+      <Button>Antd</Button>
     </>
   );
 }
