@@ -1,4 +1,4 @@
-import DemoComponents from "@components/DemoComponents";
+import DemoComponents from "@components/MainModel";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
