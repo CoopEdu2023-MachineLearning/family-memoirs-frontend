@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
-import DemoPage from '@pages/DemoPage';
+import DemoPage from '@pages/LoginPage';
 
 const routes = [
   {
