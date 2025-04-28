@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { Typography } from 'antd';
-import ForgetPwdForm from '../Form';
+import ForgetPwdForm from './Form';
 
 function MainModel() {
 

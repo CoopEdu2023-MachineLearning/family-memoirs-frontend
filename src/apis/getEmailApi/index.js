@@ -1,7 +1,7 @@
 import http from "@http";
 
-const demoApi = () => {
+const getEmailApi = () => {
   return http.get('/tests');
 }
 
-export default demoApi;
+export default getEmailApi;
