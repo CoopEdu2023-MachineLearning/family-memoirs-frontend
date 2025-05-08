@@ -19,7 +19,7 @@ const DemoPage = ({ name }) => {
       <div className="title">
         {text + name}
       </div>
-      <Button>Antd</Button>
+      <Button>登录</Button>
     </>
   );
 }
