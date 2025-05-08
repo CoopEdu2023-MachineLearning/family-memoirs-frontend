@@ -32,6 +32,7 @@ function MainModel() {
     function handleOk() {
         formRef.current.validateForm()
             .then(() => {
+                message.success('验证码已发送，请注意查收!');
                 setLoading(true);
                 verifyEmailCodeApi(emailValue, emailCodeValue)
                     .then(() => {
@@ -61,10 +62,10 @@ function MainModel() {
         <>
             <Link
                 onClick={showModal}>
-                重置密码
+                忘记密码
             </Link>
             <Modal
-                title="重置密码"
+                title="忘记密码"
                 open={open}
                 onOk={handleOk}
                 confirmLoading={loading}

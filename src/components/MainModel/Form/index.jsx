@@ -30,7 +30,7 @@ const ForgetPwdForm = forwardRef(({
     }
 
     function handleGetCode() {
-        let time = 5;
+        let time = 60;
         setDisabled(true);
 
         getEmailCodeApi(emailValue)
