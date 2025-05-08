@@ -1,0 +1,23 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.box {
+  width: 260px;
+  height: 180px;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.6), rgba(255, 255, 255, 0.2));
+  border-radius: 20px;
+  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  transform-origin: center;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  /* 添加这一行，确保元素居中 */
+  transform: translate(-50%, -50%);
+}

@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
 import DemoPage from '@pages/DemoPage';
 import LoginPage from '@pages/LoginPage';
+import HomePage from "@pages/HomePage";
 
 const routes = [
   {
@@ -11,17 +12,19 @@ const routes = [
         index: true,
         element: <Navigate to='/home' replace />,
       },
+      {
+        path: '/home',
+        element: <HomePage />
+      },
     ]
   },
   {
     element: <PublicProtectedRoute />,
     children: [
-      { path: '/login', element: <LoginPage /> }
+      { path: '/login', element: <LoginPage page={"login"}/> },
+      { path: '/register', element: <LoginPage page={"register"}/>},
+      { path: '/forget', element: <LoginPage page={"forget"}/>},
     ]
-  },
-  {
-    path: '/home',
-    element: <DemoPage name='home' />
   },
   {
     path: '/demo',
