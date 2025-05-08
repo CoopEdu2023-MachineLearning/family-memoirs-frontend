@@ -1,0 +1,111 @@
+.root .voice-player-wrapper {
+  display: flex;
+  align-items: center;
+  background: #666;
+  padding: 20px;
+  min-height: 100vh;
+}
+.root .voice-player-bubble {
+  background: #fff;
+  border-radius: 24px;
+  padding: 16px;
+  width: 320px;
+}
+.root .voice-player-bubble .header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 12px;
+}
+.root .voice-player-bubble .header .location {
+  font-weight: bold;
+}
+.root .voice-player-bubble .header .header-time {
+  color: #999;
+}
+.root .voice-player-bubble .track-list .track-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  cursor: pointer;
+}
+.root .voice-player-bubble .track-list .track-item.active .track-badge {
+  background: #f5f5f5;
+  border-radius: 16px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+}
+.root .voice-player-bubble .track-list .track-item .track-badge {
+  display: none;
+}
+.root .voice-player-bubble .track-list .track-item .track-badge .wave-icon {
+  margin-right: 6px;
+}
+.root .voice-player-bubble .track-list .track-item .track-title.plain {
+  color: #333;
+}
+.root .voice-player-bubble .track-list .track-item .track-time {
+  font-size: 12px;
+  color: #999;
+}
+.root .voice-player-bubble .progress-bar {
+  margin-top: 12px;
+}
+.root .voice-player-bubble .progress-bar input[type=range] {
+  width: 100%;
+  appearance: none;
+  height: 4px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  outline: none;
+}
+.root .voice-player-bubble .progress-bar input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #333;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -4px;
+}
+.root .voice-player-bubble .progress-bar .time-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+.root .voice-player-bubble .progress-bar .time-labels .elapsed, .root .voice-player-bubble .progress-bar .time-labels .remaining {
+  width: 40px;
+  text-align: center;
+}
+.root .control-button {
+  margin-left: 16px;
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.root .control-button .bar {
+  width: 4px;
+  height: 20px;
+  background: #333;
+  margin: 0 2px;
+}
+.root .control-button .play-triangle {
+  width: 0;
+  height: 0;
+  border-left: 12px solid #333;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+/*# sourceMappingURL=index.module.css.map */

@@ -1,0 +1,38 @@
+.root .user-details {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+}
+.root .user-details__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.root .user-details__header .user-details__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.root .user-details__header .user-details__name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+.root .user-details__uploader {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.root .user-details__uploader .user-details__uploader-name {
+  text-decoration: underline;
+  color: #333;
+}
+.root .user-details__description {
+  line-height: 1.6;
+  text-indent: 2em;
+}
+
+/*# sourceMappingURL=index.module.css.map */

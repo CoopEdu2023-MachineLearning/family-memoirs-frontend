@@ -2,6 +2,7 @@ import DemoComponents from "@components/DemoComponents";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
+import VoicePlayer from "@components/ArticleComponents/VoicePlayer/index.jsx";
 
 const DemoPage = ({ name }) => {
   const [text, setText] = useState('');

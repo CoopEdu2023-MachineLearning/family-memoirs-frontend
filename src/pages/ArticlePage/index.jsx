@@ -1,7 +1,7 @@
-// src/pages/ArticlePage.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getArticleById } from "@http";
+import styles from './index.module.scss';
 
 export default function ArticlePage() {
     const { id } = useParams();
@@ -40,35 +40,37 @@ export default function ArticlePage() {
         ['无正文内容'];
 
     return (
-        <div className="article-container">
-            <aside className="article-sidebar">
-                <div className="meta-item">
-                    <label>时期</label>
-                    <div>{article.era || '未知'}</div>
-                </div>
-                <div className="meta-item">
-                    <label>时间</label>
-                    <div>{article.startDate || '未知'} 至 {article.endDate || '未知'}</div>
-                </div>
-                <div className="meta-item">
-                    <label>地点</label>
-                    <div>{article.location || '未知'}</div>
-                </div>
-                <div className="meta-item">
-                    <label>作者</label>
-                    <div>{article.user?.username || '未知'}</div>
-                </div>
-                <div className="meta-item">
-                    <label>简介</label>
-                    <div>{article.description || '无简介'}</div>
-                </div>
-            </aside>
+        <div className={styles.root}>
+            <div className={styles.articleContainer}>
+                <aside className={styles.articleSidebar}>
+                    <div className={styles.metaItem}>
+                        <label>时期</label>
+                        <div>{article.era || '未知'}</div>
+                    </div>
+                    <div className={styles.metaItem}>
+                        <label>时间</label>
+                        <div>{article.startDate || '未知'} 至 {article.endDate || '未知'}</div>
+                    </div>
+                    <div className={styles.metaItem}>
+                        <label>地点</label>
+                        <div>{article.location || '未知'}</div>
+                    </div>
+                    <div className={styles.metaItem}>
+                        <label>作者</label>
+                        <div>{article.user?.username || '未知'}</div>
+                    </div>
+                    <div className={styles.metaItem}>
+                        <label>简介</label>
+                        <div>{article.description || '无简介'}</div>
+                    </div>
+                </aside>
 
-            <main className="article-content">
-                {paragraphs.map((p, idx) => (
-                    <p key={idx}>{p}</p>
-                ))}
-            </main>
+                <main className={styles.articleContent}>
+                    {paragraphs.map((p, idx) => (
+                        <p key={idx}>{p}</p>
+                    ))}
+                </main>
+            </div>
         </div>
     );
 }
