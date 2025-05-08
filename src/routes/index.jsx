@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
-import DemoPage from '@pages/LoginPage';
+import LoginPage from '@pages/LoginPage';
+import UploadArticlePage from '../pages/UploadArticlePage';
 
 const routes = [
   {
@@ -15,16 +16,16 @@ const routes = [
   {
     element: <PublicProtectedRoute />,
     children: [
-      { path: '/login', element: <DemoPage name='login' /> }
+      { path: '/login', element: <LoginPage name='login' /> }
     ]
   },
   {
-    path: '/home',
-    element: <DemoPage name='home' />
+    path: '/mypage/article/upload',
+    element: <UploadArticlePage name='upload' />
   },
   {
     path: '/demo',
-    element: <DemoPage name='demo' />
+    element: <LoginPage name='demo' />
   },
 ];
 

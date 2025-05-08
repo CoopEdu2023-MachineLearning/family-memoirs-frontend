@@ -5,7 +5,7 @@ import ForgetPwdForm from './Form';
 import { verifyEmailCodeApi, resetPasswordApi } from '../../apis';
 import { message } from 'antd';
 
-function MainModel() {
+function ForgetPwdModel() {
 
     const { Link } = Typography
 
@@ -23,16 +23,9 @@ function MainModel() {
         setOpen(true);
     };
 
-    // handle ok:
-    // 1. 验证邮箱是否格式正确 (non-req) / 存在 (存在后发送验证码)
-    // 2. 验证验证码是否正确/过期 (req)
-    // 3. 验证密码是否一致 (放在 Rule 里)
-    // 4. 重置密码 (req)
-    // 5. 成功后再关闭弹窗
     function handleOk() {
         formRef.current.validateForm()
             .then(() => {
-                message.success('验证码已发送，请注意查收!');
                 setLoading(true);
                 verifyEmailCodeApi(emailValue, emailCodeValue)
                     .then(() => {
@@ -89,4 +82,4 @@ function MainModel() {
     );
 };
 
-export default MainModel;
+export default ForgetPwdModel;

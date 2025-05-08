@@ -34,8 +34,8 @@ const ForgetPwdForm = forwardRef(({
         setDisabled(true);
 
         getEmailCodeApi(emailValue)
-            .then((code) => {
-                console.log(code);
+            .then(() => {
+                message.success('验证码已发送，请注意查收!');
                 startCountdown(time);
             })
             .catch((error) => {

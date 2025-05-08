@@ -1,17 +1,10 @@
-import MainModel from "@components/MainModel";
+import ForgetPwdModel from "../../components/ForgetPwdModel";
 
 const LoginPage = () => {
 
-  // useEffect(() => {
-  //   getEmailApi()
-  //     .then(data => {
-  //       setText(data);
-  //     });
-  // }, []);
-
   return (
     <>
-      <MainModel />
+      <ForgetPwdModel />
     </>
   );
 }
