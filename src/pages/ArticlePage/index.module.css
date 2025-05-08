@@ -1,0 +1,39 @@
+.article-container {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+}
+
+.article-sidebar {
+  flex: 0 0 240px;
+  border-right: 1px solid #eee;
+  padding-right: 16px;
+}
+
+.meta-item {
+  margin-bottom: 16px;
+}
+
+.meta-item label {
+  display: block;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.meta-item div {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.article-content {
+  flex: 1;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.article-content p {
+  margin-bottom: 16px;
+}
+
+/*# sourceMappingURL=index.module.css.map */
