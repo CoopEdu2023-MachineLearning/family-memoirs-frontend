@@ -3,6 +3,13 @@ import { useParams } from 'react-router-dom';
 import { getArticleById } from "@http";
 import styles from './index.module.scss';
 
+// 导入组件
+import Tags from '../../components/ArticleComponents/TagComponents';
+import TextComponents from '../../components/ArticleComponents/TextComponents';
+import UserDetails from '../../components/ArticleComponents/UserComponents';
+import VoicePlayer from '../../components/ArticleComponents/VoicePlayer';
+import TitleComponents from '../../components/ArticleComponents/TitleComponents';
+
 export default function ArticlePage() {
     const { id } = useParams();
     const [article, setArticle] = useState(null);
@@ -12,12 +19,10 @@ export default function ArticlePage() {
     useEffect(() => {
         getArticleById(id)
             .then(res => {
-                console.log('API响应:', res); // 调试日志
-                // 检查实际的响应结构
+                console.log('API响应:', res);
                 if (res) {
                     setArticle(res);
                 } else {
-                    // 记录详细错误
                     const errorMsg = '未知错误';
                     console.error('获取文章失败:', errorMsg);
                     setError(errorMsg);
@@ -30,46 +35,57 @@ export default function ArticlePage() {
             .finally(() => setLoading(false));
     }, [id]);
 
-    if (loading) return <div>加载中…</div>;
-    if (error) return <div>错误: {error}</div>;
-    if (!article) return <div>未能获取到文章</div>;
+    if (loading) return <div className={styles.loading}>加载中…</div>;
+    if (error) return <div className={styles.error}>错误: {error}</div>;
+    if (!article) return <div className={styles.notFound}>未能获取到文章</div>;
 
-    // 确保 text 字段存在再进行拆分
-    const paragraphs = article.text ?
-        article.text.split('\n').filter(p => p.trim()) :
-        ['无正文内容'];
+    // 准备语音播放器数据
+    const audioTracks = article.audioFiles?.map((audio, index) => ({
+        id: audio.id || `track-${index}`,
+        title: audio.title || `录音 ${index + 1}`,
+        src: audio.url,
+        time: audio.duration || '00:00',
+        location: audio.location || article.location
+    })) || [];
 
     return (
         <div className={styles.root}>
+
+            {/* 标签区域 */}
+            <header className={styles.articleHeader}>
+                {article.tags && article.tags.length > 0 && (
+                    <Tags tags={article.tags} />
+                )}
+            </header>
+
             <div className={styles.articleContainer}>
                 <aside className={styles.articleSidebar}>
-                    <div className={styles.metaItem}>
-                        <label>时期</label>
-                        <div>{article.era || '未知'}</div>
-                    </div>
-                    <div className={styles.metaItem}>
-                        <label>时间</label>
-                        <div>{article.startDate || '未知'} 至 {article.endDate || '未知'}</div>
-                    </div>
-                    <div className={styles.metaItem}>
-                        <label>地点</label>
-                        <div>{article.location || '未知'}</div>
-                    </div>
-                    <div className={styles.metaItem}>
-                        <label>作者</label>
-                        <div>{article.user?.username || '未知'}</div>
-                    </div>
-                    <div className={styles.metaItem}>
-                        <label>简介</label>
-                        <div>{article.description || '无简介'}</div>
-                    </div>
+                    {/* 标题组件 */}
+                    <TitleComponents
+                        title={article.title}
+                        era={article.era}
+                        startDate={article.startDate}
+                        endDate={article.endDate}
+                        location={article.location}
+                    />
+                    {article.user && (
+                        <UserDetails
+                            name={article.user.username}
+                        />
+                    )}
+                    {audioTracks.length > 0 && (
+                        <div className={styles.audioSection}>
+                            <h3 className={styles.audioTitle}>口述历史录音</h3>
+                            <VoicePlayer
+                                tracks={audioTracks}
+                                location={article.location}
+                            />
+                        </div>
+                    )}
                 </aside>
-
-                <main className={styles.articleContent}>
-                    {paragraphs.map((p, idx) => (
-                        <p key={idx}>{p}</p>
-                    ))}
-                </main>
+                <div className={styles.mainContent}>
+                    <TextComponents text={article.text} />
+                </div>
             </div>
         </div>
     );
