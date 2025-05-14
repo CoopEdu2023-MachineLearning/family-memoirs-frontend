@@ -64,9 +64,11 @@ export default function ArticlePage() {
                     <TitleComponents
                         title={article.title}
                         era={article.era}
-                        startDate={article.startDate}
-                        endDate={article.endDate}
                         location={article.location}
+                        startYear={article.startYear}
+                        endYear={article.endYear}
+                        startMonth={article.startMonth}
+                        endMonth={article.endMonth}
                     />
                     {article.user && (
                         <UserDetails

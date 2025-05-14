@@ -1,16 +1,21 @@
 .root {
-  display: inline-flex;
-  padding: 40px 40px 0 40px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0px 40px 40px 40px;
   justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  border-radius: 6px;
+  align-items: center;
+  border-radius: 10px;
   background: #FFF;
   box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.05);
 }
+.root .articleHeader {
+  width: 100%;
+}
 .root .articleContainer {
   display: flex;
-  width: 687px;
+  width: 100%;
   font-size: 18px;
   line-height: 150%;
   gap: 24px;
@@ -20,6 +25,9 @@
   flex: 0 0 400px;
   border-right: 1px solid #eee;
   padding-right: 16px;
+}
+.root .mainContent {
+  flex: 1;
 }
 .root .metaItem {
   margin-bottom: 16px;
