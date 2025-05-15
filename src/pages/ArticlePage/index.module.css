@@ -3,7 +3,7 @@
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0px 40px 40px 40px;
+  padding: 0 40px 40px 40px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -24,7 +24,7 @@
 .root .articleSidebar {
   flex: 0 0 400px;
   border-right: 1px solid #eee;
-  padding-right: 16px;
+  padding-right: 40px;
 }
 .root .mainContent {
   flex: 1;
