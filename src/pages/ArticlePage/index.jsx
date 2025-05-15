@@ -50,17 +50,8 @@ export default function ArticlePage() {
 
     return (
         <div className={styles.root}>
-
-            {/* 标签区域 */}
-            <header className={styles.articleHeader}>
-                {article.tags && article.tags.length > 0 && (
-                    <Tags tags={article.tags} />
-                )}
-            </header>
-
             <div className={styles.articleContainer}>
                 <aside className={styles.articleSidebar}>
-                    {/* 标题组件 */}
                     <TitleComponents
                         title={article.title}
                         era={article.era}
@@ -70,12 +61,20 @@ export default function ArticlePage() {
                         startMonth={article.startMonth}
                         endMonth={article.endMonth}
                     />
+                    {/* 文章标签
+                    <header className={styles.articleHeader}>
+                        {article.tags && article.tags.length > 0 && (
+                            <Tags tags={article.tags}/>
+                        )}
+                    </header>
+                    */}
                     {article.user && (
                         <UserDetails
                             name={article.user.username}
                         />
                     )}
-                    {audioTracks.length > 0 && (
+                    {/* 录音播放器
+                    audioTracks.length > 0 && (
                         <div className={styles.audioSection}>
                             <h3 className={styles.audioTitle}>口述历史录音</h3>
                             <VoicePlayer
@@ -83,10 +82,11 @@ export default function ArticlePage() {
                                 location={article.location}
                             />
                         </div>
-                    )}
+                    )
+                    */}
                 </aside>
                 <div className={styles.mainContent}>
-                    <TextComponents text={article.text} />
+                    <TextComponents text={article.text}/>
                 </div>
             </div>
         </div>
