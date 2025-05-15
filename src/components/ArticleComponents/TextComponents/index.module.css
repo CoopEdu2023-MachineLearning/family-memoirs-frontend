@@ -1,9 +1,10 @@
-.root .articleContent {
+.articleContent {
   flex: 1;
   line-height: 1.8;
   font-size: 16px;
+  font-family: FZKai-Z03, serif;
 }
-.root .articleContent p {
+.articleContent p {
   margin-bottom: 16px;
 }
 

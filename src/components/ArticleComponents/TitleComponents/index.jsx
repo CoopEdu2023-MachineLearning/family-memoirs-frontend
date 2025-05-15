@@ -19,8 +19,8 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
             return (
                 <>
                     <div className={styles.date_style1}>
-                        <span>{startYear}年-{endYear}年</span>
-                        <span>{location}</span>
+                        <div>{startYear}年-{endYear}年</div>
+                        <div>{location}</div>
                     </div>
                 </>
             );
@@ -30,8 +30,8 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
         if (startYear && startMonth && !endYear && !endMonth) {
             return (
                 <div className={styles.date_style1}>
-                    <span>{startYear}年{startMonth}月</span>
-                    <span>{location}</span>
+                    <div>{startYear}年{startMonth}月</div>
+                    <div>{location}</div>
                 </div>
             );
         }
@@ -41,18 +41,18 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
             if (startYear === endYear) {
                 return (
                     <div className={styles.date_style2}>
-                        <span>{startYear}年{startMonth}月-{endMonth}月</span>
-                        <span>{location}</span>
+                        <div>{startYear}年{startMonth}月-{endMonth}月</div>
+                        <div>{location}</div>
                     </div>
                 )
             } else {
                 return (
                     <div className={styles.date_style2}>
-                        <span>{startYear}年{startMonth}月</span>
+                        <div>{startYear}年{startMonth}月</div>
                         <div className={styles.second_line}>至
                             <div>{endYear}年{endMonth}月</div>
                         </div>
-                        <span>{location}</span>
+                        <div>{location}</div>
                     </div>
                 );
             }

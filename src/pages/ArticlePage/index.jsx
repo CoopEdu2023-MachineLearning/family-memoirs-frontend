@@ -9,6 +9,7 @@ import TextComponents from '../../components/ArticleComponents/TextComponents';
 import UserDetails from '../../components/ArticleComponents/UserComponents';
 import VoicePlayer from '../../components/ArticleComponents/VoicePlayer';
 import TitleComponents from '../../components/ArticleComponents/TitleComponents';
+import PhotoComponents from "@components/ArticleComponents/PhotoComponents/index.jsx";
 
 export default function ArticlePage() {
     const { id } = useParams();
@@ -61,29 +62,12 @@ export default function ArticlePage() {
                         startMonth={article.startMonth}
                         endMonth={article.endMonth}
                     />
-                    {/* 文章标签
-                    <header className={styles.articleHeader}>
-                        {article.tags && article.tags.length > 0 && (
-                            <Tags tags={article.tags}/>
-                        )}
-                    </header>
-                    */}
                     {article.user && (
                         <UserDetails
                             name={article.user.username}
                         />
                     )}
-                    {/* 录音播放器
-                    audioTracks.length > 0 && (
-                        <div className={styles.audioSection}>
-                            <h3 className={styles.audioTitle}>口述历史录音</h3>
-                            <VoicePlayer
-                                tracks={audioTracks}
-                                location={article.location}
-                            />
-                        </div>
-                    )
-                    */}
+                    <PhotoComponents photos={article.images} />
                 </aside>
                 <div className={styles.mainContent}>
                     <TextComponents text={article.text}/>

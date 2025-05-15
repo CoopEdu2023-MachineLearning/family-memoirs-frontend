@@ -1,11 +1,10 @@
-.root{
-  .articleContent {
-    flex: 1;
-    line-height: 1.8;
-    font-size: 16px;
+.articleContent {
+  flex: 1;
+  line-height: 1.8;
+  font-size: 16px;
+  font-family: FZKai-Z03, serif;
 
-    p {
-      margin-bottom: 16px;
-    }
+  p {
+    margin-bottom: 16px;
   }
 }
