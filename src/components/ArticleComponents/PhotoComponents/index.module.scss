@@ -20,7 +20,7 @@
   background: #f5f5f5;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-  position: relative; // 添加相对定位
+  position: relative;
 }
 
 .image {
@@ -28,7 +28,7 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-  position: relative; // 添加相对定位
+  position: relative;
   transition: transform 0.3s ease;
 }
 
@@ -55,7 +55,6 @@
   transform: scale(1.05);
 }
 
-/* Lightbox 遮罩层 */
 .lightbox {
   position: fixed;
   top: 0;
@@ -69,14 +68,12 @@
   z-index: 1000;
 }
 
-/* Lightbox 中的大图 */
 .lightboxImage {
   max-width: 90%;
   max-height: 90%;
   border-radius: 4px;
 }
 
-/* 关闭按钮 */
 .closeButton {
   position: absolute;
   top: 20px;
