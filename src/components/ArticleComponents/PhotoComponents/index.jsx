@@ -1,9 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.module.scss';
 
 export default function PhotoComponents({photos}) {
     const [selected, setSelected] = useState(null);
+
+    useEffect(() => {
+        const cards = document.querySelectorAll(`.${styles.item}`);
+        const handleMouseMove = (e, card) => {
+            const x = e.pageX - card.offsetLeft;
+            const y = e.pageY - card.offsetTop;
+
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        };
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => handleMouseMove(e, card));
+        });
+
+        return () => {
+            cards.forEach(card => {
+                card.removeEventListener('mousemove', (e) => handleMouseMove(e, card));
+            });
+        };
+    }, [photos]);
 
     const formatPhotos = () => {
         if (!photos || photos.length === 0) {
@@ -43,8 +64,6 @@ export default function PhotoComponents({photos}) {
             )
         }
     }
-
-// 三张及以上图片的渲染
     return (
         <>
             <div>{formatPhotos()}</div>
