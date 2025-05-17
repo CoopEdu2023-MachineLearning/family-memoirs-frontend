@@ -16,7 +16,7 @@
 .root .articleContainer {
   display: flex;
   width: 100%;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 150%;
   gap: 24px;
   padding: 24px;

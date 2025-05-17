@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 // 导入组件
 import Tags from '../../components/ArticleComponents/TagComponents';
 import TextComponents from '../../components/ArticleComponents/TextComponents';
-import UserDetails from '../../components/ArticleComponents/UserComponents';
+import TellerComponents from '../../components/ArticleComponents/TellerComponents';
 import VoicePlayer from '../../components/ArticleComponents/VoicePlayer';
 import TitleComponents from '../../components/ArticleComponents/TitleComponents';
 import PhotoComponents from "@components/ArticleComponents/PhotoComponents/index.jsx";
@@ -63,8 +63,9 @@ export default function ArticlePage() {
                         endMonth={article.endMonth}
                     />
                     {article.user && (
-                        <UserDetails
-                            name={article.user.username}
+                        <TellerComponents
+                            teller={article.teller}
+                            uploaderName={article.user}
                         />
                     )}
                     <PhotoComponents photos={article.images} />

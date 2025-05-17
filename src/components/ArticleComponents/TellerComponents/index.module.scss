@@ -1,0 +1,35 @@
+.teller {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.name {
+  font-size: 24px;
+  font-family: 'KaiTi', serif;
+  color: #333;
+}
+
+.intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #555;
+  white-space: pre-wrap;
+  margin-top: 8px;
+}
