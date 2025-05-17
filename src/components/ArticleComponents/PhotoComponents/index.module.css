@@ -1,12 +1,12 @@
 .gallery {
   column-count: 2;
-  column-gap: 16px;
+  column-gap: 10px;
   margin-top: 24px;
 }
 
 .galley_simple {
   column-count: 1;
-  column-gap: 16px;
+  column-gap: 10px;
   margin-top: 24px;
 }
 
@@ -14,7 +14,7 @@
   break-inside: avoid;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   border-radius: 8px;
   overflow: hidden;
   background: #f5f5f5;
