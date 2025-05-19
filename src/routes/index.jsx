@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
 import DemoPage from '@pages/DemoPage';
+import WaterfallPage from '../pages/WaterfallPage';
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   {
     path: '/demo',
     element: <DemoPage name='demo' />
+  },
+  {
+    path: '/waterfall',
+    element: <WaterfallPage/>
   },
 ];
 
