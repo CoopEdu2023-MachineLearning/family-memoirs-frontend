@@ -4,6 +4,8 @@ import DemoPage from '@pages/DemoPage';
 import LoginPage from '@pages/LoginPage';
 import HomePage from "@pages/HomePage";
 
+import signUp from "@pages/SignUpPage/SignUp.jsx";
+import SignUp from "@pages/SignUpPage/SignUp.jsx";
 const routes = [
   {
     element: <PrivateProtectedRoute />,
@@ -27,9 +29,17 @@ const routes = [
     ]
   },
   {
+    path: '/home',
+    element: <DemoPage name='home' />
+  },
+  {
     path: '/demo',
     element: <DemoPage name='demo' />
   },
+  {
+    path: '/signup',
+    element: <SignUp />
+  }
 ];
 
 export default routes;
