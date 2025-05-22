@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
 import DemoPage from '@pages/DemoPage';
-
+import signUp from "@pages/SignUpPage/SignUp.jsx";
+import SignUp from "@pages/SignUpPage/SignUp.jsx";
 const routes = [
   {
     element: <PrivateProtectedRoute />,
@@ -26,6 +27,10 @@ const routes = [
     path: '/demo',
     element: <DemoPage name='demo' />
   },
+  {
+    path: '/signup',
+    element: <SignUp />
+  }
 ];
 
 export default routes;

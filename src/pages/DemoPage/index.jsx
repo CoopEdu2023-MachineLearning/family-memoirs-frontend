@@ -2,6 +2,7 @@ import DemoComponents from "@components/DemoComponents";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
+import { Card } from "@components/CardComponent";
 
 const DemoPage = ({ name }) => {
   const [text, setText] = useState('');
@@ -20,6 +21,8 @@ const DemoPage = ({ name }) => {
         {text + name}
       </div>
       <Button>Antd</Button>
+      <Card />
+
     </>
   );
 }
