@@ -1,0 +1,108 @@
+.modal :global {
+
+    @font-face {
+        font-family: 'FZKai';
+        src: url('../../assets/FZKTK.TTF') format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+
+    .ant-form-item-label>label {
+        font-family: "PingFang SC";
+        font-weight: bold !important;
+    }
+
+    .ant-modal-content {
+        align-items: center;
+        width: 42.06vw;
+        min-width: 300px;
+        border-radius: 20px;
+        margin: 0;
+        padding: 3.96vh
+    }
+
+    .ant-modal-title {
+        color: #000;
+        text-align: center;
+        font-family: 'FZKai';
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .ant-modal-header {
+        margin: 0 0;
+        padding: 2.2vh 0 5.2vh 0;
+    }
+
+    .ant-modal-footer {
+        padding: 4vh 0 2.2vh 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-form-item-label {
+        padding: 0 0 10px 0;
+    }
+
+    .ant-input,
+    .ant-input-password {
+        height: 42px;
+        width: 28.83vw;
+        align-items: center;
+        border-radius: 13px;
+        border: 0.5px solid rgba(0, 0, 0, 0.20);
+    }
+
+    .send-code-btn {
+        border-radius: 999px;
+        display: flex;
+        width: 8.2vw;
+        height: 42px;
+        padding: 6px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        font-family: "PingFang SC";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .confirm-btn {
+        align-items: center;
+        border-radius: 1000px;
+        display: flex;
+        width: 18.71vw;
+        height: 52px;
+        padding: 12px 0px;
+        color: #FFF;
+        font-family: "PingFang SC";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .email-code-container {
+        display: flex;
+        gap: 0.53vw;
+        width: 28.83vw;
+    }
+
+    .email-code-input {
+        width: 20.10vw;
+    }
+
+    .ant-form-item-explain-error {
+        text-align: left;
+        width: 28.83vw;
+        margin: 0 auto;
+    }
+}

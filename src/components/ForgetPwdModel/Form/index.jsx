@@ -21,12 +21,12 @@ const ForgetPwdForm = forwardRef(({
         },
     }));
 
-    const [getCodeText, setGetCodeText] = React.useState('获取验证码');
+    const [getCodeText, setGetCodeText] = React.useState('点击发送验证码');
     const [disabled, setDisabled] = React.useState(false);
 
     function resetGetCodeButton() {
         setDisabled(false);
-        setGetCodeText('获取验证码');
+        setGetCodeText('点击发送验证码');
     }
 
     function handleGetCode() {
@@ -60,11 +60,13 @@ const ForgetPwdForm = forwardRef(({
     return (
         <>
             <Form
+                labelCol={{ style: { textAlign: "left", width: "28.83vw", margin: "0 auto" } }}
+                wrapperCol={{ align: 'center' }}
+                colon={false}
+                requiredMark={false}
+                layout='vertical'
                 form={form}
                 name="basic"
-                labelCol={{ span: 7 }}
-                wrapperCol={{ span: 15 }}
-                style={{ maxWidth: 600, margin: '3vh auto' }}
             >
                 <Form.Item
                     label="邮箱"
@@ -79,26 +81,29 @@ const ForgetPwdForm = forwardRef(({
                 </Form.Item>
 
                 <Form.Item
-                    label="邮箱验证码"
+                    label="验证码"
                     name="emailCode"
                     rules={[
                         { required: true, message: '请输入邮箱验证码' },
                         { min: 0, max: 6, message: '验证码长度不能超过6位' }
                     ]}
                 >
-                    <Space.Compact style={{ width: '100%' }}>
+                    <div className='email-code-container'>
                         <Input
+                            className='email-code-input'
                             value={emailCodeValue}
                             onChange={(e) => setEmailCodeValue(e.target.value)}
                         />
                         <Button
-                            type="primary"
+                            className='send-code-btn'
+                            color="default"
+                            variant="solid"
                             onClick={handleGetCode}
                             disabled={disabled}
                         >
                             {getCodeText}
                         </Button>
-                    </Space.Compact>
+                    </div>
                 </Form.Item>
 
                 <Form.Item

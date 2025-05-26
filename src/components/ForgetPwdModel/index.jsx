@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { Typography } from 'antd';
 import ForgetPwdForm from './Form';
 import { verifyEmailCodeApi, resetPasswordApi } from '../../apis';
 import { message } from 'antd';
+
+import styles from './index.module.scss';
 
 function ForgetPwdModel() {
 
@@ -58,13 +60,23 @@ function ForgetPwdModel() {
                 忘记密码
             </Link>
             <Modal
+                centered
+                className={styles.modal}
                 title="忘记密码"
                 open={open}
-                onOk={handleOk}
                 confirmLoading={loading}
                 onCancel={handleCancel}
-                cancelText="取消"
-                okText="确定"
+                footer={[
+                    <Button
+                        className='confirm-btn'
+                        color="default"
+                        variant="solid"
+                        key="submit"
+                        onClick={handleOk}
+                    >
+                        继续
+                    </Button>
+                ]}
             >
                 <ForgetPwdForm
                     ref={formRef}

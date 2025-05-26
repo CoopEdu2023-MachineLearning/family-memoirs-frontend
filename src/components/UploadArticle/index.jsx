@@ -1,46 +1,120 @@
-import React, { useState } from "react";
-import { Upload, Button, Input, Form, message } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, message } from 'antd';
+import { useEffect, useState } from 'react';
 
-const UploadArticle = () => {
-    const [fileList, setFileList] = useState([]);
+import MainNarrator from './MainNarrator';
+import OtherNarrators from './OtherNarrators';
+import Audio from './Audio';
+import Context from './Context';
+import Location from './Location';
 
-    const handleUpload = () => {
-        if (fileList.length === 0) {
-            message.error("请先上传文件！");
-            return;
-        }
-        message.success("文章上传成功！");
-        // 在这里可以添加上传逻辑，例如调用后端接口
+import http from '../../http';
+import Time from './Time';
+import TagBox from './TagBox';
+
+function UploadArticle(articleId) {
+    const [mainNarrator, setMainNarrator] = useState('');
+    const [otherNarrators, setOtherNarrators] = useState([]);
+    const [uploading, setUploading] = useState(false);
+    const [audioList, setAudioList] = useState([]);
+    const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
+    const [location, setLocation] = useState('');
+    const [time, setTime] = useState(null);
+    const [context, setContext] = useState('');
+    const [intro, setIntro] = useState('');
+
+    useEffect(() => {
+        http.get(`/article/${articleId}/get`)
+            .then((res) => {
+                setTitle(res.title);
+                setIntro(res.intro);
+                setMainNarrator(res.mainNarrator);
+            })
+            .catch(error =>
+                message.error(`无法获取已保存的记录: ${error.message}`)
+            );
+    }, []);
+
+    const submit = () => {
+        const data = {
+            title,
+            intro,
+        };
+
+        http.post(`/article/${articleId}/upload`, data)
+            .then(() => {
+                message.success('上传成功！');
+                clearData();
+                setTimeout(() => window.location.reload(), 2000);
+            })
+            .catch(error => message.error(`上传失败: ${error.message}`));
     };
 
-    const handleChange = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
+    const clearData = () => {
+        setTitle('');
+        setIntro('');
     };
 
     return (
-        <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px" }}>
-            <Form layout="vertical">
-                <Form.Item label="文章标题" name="title" rules={[{ required: true, message: "请输入文章标题" }]}>
-                    <Input placeholder="请输入文章标题" />
-                </Form.Item>
-                <Form.Item label="上传文章" name="upload">
-                    <Upload
-                        fileList={fileList}
-                        onChange={handleChange}
-                        beforeUpload={() => false} // 阻止自动上传
-                    >
-                        <Button icon={<UploadOutlined />}>点击上传</Button>
-                    </Upload>
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" onClick={handleUpload}>
-                        提交
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
+        <>
+            <div style={{ margin: '20px 0' }}>
+                该故事讲述者为：
+                <MainNarrator
+                    mainNarrator={mainNarrator}
+                    setMainNarrator={setMainNarrator}
+                />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                该故事关联的其他讲述者：
+                <OtherNarrators
+                    otherNarrators={otherNarrators}
+                    setOtherNarrators={setOtherNarrators}
+                />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                <Audio
+                    audioList={audioList}
+                    setAudioList={setAudioList}
+                    articleId={articleId}
+                    setUploading={setUploading}
+                />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                <div>时间</div>
+                <Time time={time} setTime={setTime} />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                <div>地点</div>
+                <Location location={location} setLocation={setLocation} />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                <div>正文</div>
+                <Context context={context} setContext={setContext} />
+            </div>
+
+            <div style={{ margin: '20px 0' }}>
+                <div>标签</div>
+                <TagBox />
+            </div>
+
+            <Button
+                type="primary"
+                disabled={buttonIsDisabled}
+            >
+                上传
+            </Button>
+            <Button
+                disabled={buttonIsDisabled}
+            >
+                取消
+            </Button>
+
+        </>
     );
-};
+}
 
 export default UploadArticle;
