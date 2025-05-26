@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getArticleById } from "@http";
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {getArticleById} from "@http";
 import styles from './index.module.scss';
 
-// 导入组件
-import Tags from '../../components/ArticleComponents/TagComponents';
 import TextComponents from '../../components/ArticleComponents/TextComponents';
 import TellerComponents from '../../components/ArticleComponents/TellerComponents';
 import VoicePlayer from '../../components/ArticleComponents/VoicePlayer';
 import TitleComponents from '../../components/ArticleComponents/TitleComponents';
 import PhotoComponents from "@components/ArticleComponents/PhotoComponents/index.jsx";
+import TagComponents from "../../components/ArticleComponents/TagComponents";
 
 export default function ArticlePage() {
-    const { id } = useParams();
+    const {id} = useParams();
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -40,15 +39,6 @@ export default function ArticlePage() {
     if (error) return <div className={styles.error}>错误: {error}</div>;
     if (!article) return <div className={styles.notFound}>未能获取到文章</div>;
 
-    // 准备语音播放器数据
-    const audioTracks = article.audioFiles?.map((audio, index) => ({
-        id: audio.id || `track-${index}`,
-        title: audio.title || `录音 ${index + 1}`,
-        src: audio.url,
-        time: audio.duration || '00:00',
-        location: audio.location || article.location
-    })) || [];
-
     return (
         <div className={styles.root}>
             <div className={styles.articleContainer}>
@@ -62,13 +52,15 @@ export default function ArticlePage() {
                         startMonth={article.startMonth}
                         endMonth={article.endMonth}
                     />
-                    {article.user && (
+                    <TagComponents tags={article.tags}/>
+                    <VoicePlayer audioList={article.audio} />
+                    {article.teller && (
                         <TellerComponents
                             teller={article.teller}
                             uploaderName={article.user}
                         />
                     )}
-                    <PhotoComponents photos={article.images} />
+                    <PhotoComponents photos={article.images}/>
                 </aside>
                 <div className={styles.mainContent}>
                     <TextComponents text={article.text}/>

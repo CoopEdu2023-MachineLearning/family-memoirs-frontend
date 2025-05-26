@@ -9,17 +9,17 @@ export default function TellerComponents({ teller, uploaderName }) {
         return (
             <div className={styles.teller}>
                 <div className={styles.header}>
-                    {teller.avatar_url && (
+                    {teller.avatarUrlOld && (
                         <img
-                            src={`http://localhost:8080/teller/avatar${teller.avatar_url}`}
-                            alt={teller.name}
+                            src={`http://localhost:8080/teller/avatar${teller.avatarUrlOld}`}
+                            alt={teller.nameOld}
                             className={styles.avatar}
                         />
                     )}
-                    <h2 className={styles.name}>{teller.name}</h2>
+                    <h2 className={styles.name}>{teller.nameOld}</h2>
                 </div>
                 {uploaderName && <UserDetails name={uploaderName} />}
-                <p className={styles.intro}>{teller.intro}</p>
+                <p className={styles.intro}>{teller.introOld}</p>
             </div>
         );
     }

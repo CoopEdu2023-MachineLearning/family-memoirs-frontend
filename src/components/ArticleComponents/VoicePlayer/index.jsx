@@ -1,83 +1,157 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './index.module.scss';
 
-const WaveIcon = () => (
-    <svg className={styles['wave-icon']} width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="4" width="2" height="8" fill="#888"/>
-        <rect x="9" y="2" width="2" height="12" fill="#888"/>
-        <rect x="15" y="6" width="2" height="4" fill="#888"/>
-    </svg>
-);
+const formatTime = seconds => {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+};
 
-function VoicePlayer({ tracks, location }) {
-    const [current, setCurrent] = useState(tracks[0] || null);
-    const [playing, setPlaying] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const audioRef = useRef(null);
+export default function VoiceComponents({ audioList }) {
+    const audioRefs = useRef({});
+    const menuContainerRef = useRef(null);
+    const [selectedId, setSelectedId] = useState(audioList[0]?.id || null);
+    const [playingId, setPlayingId] = useState(null);
+    const [progressMap, setProgressMap] = useState({});
+    const [draggingId, setDraggingId] = useState(null);
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    // 其它逻辑保持不变...
+    useEffect(() => {
+        return () => Object.values(audioRefs.current).forEach(a => a && a.pause());
+    }, []);
 
-    if (!current) {
-        return <div className={styles['voice-player-wrapper']}>加载中...</div>;
-    }
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuOpen &&
+                menuContainerRef.current &&
+                !menuContainerRef.current.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuOpen]);
+
+    const selected = audioList.find(item => item.id === selectedId);
+    if (!selected) return null;
+
+    const currentTime = progressMap[selected.id] || 0;
+    const percent = selected.duration > 0 ? (currentTime / selected.duration) * 100 : 0;
+    const isPlaying = playingId === selected.id;
+
+    const handleTimeUpdate = id => {
+        if (draggingId === id) return;
+        const audio = audioRefs.current[id];
+        if (audio) setProgressMap(prev => ({ ...prev, [id]: audio.currentTime }));
+    };
+
+    const handlePlayPause = id => {
+        const currentAudio = audioRefs.current[id];
+        if (!currentAudio) return;
+        Object.values(audioRefs.current).forEach(a => a && a.id !== id && !a.paused && a.pause());
+        if (playingId === id) {
+            currentAudio.pause();
+            setPlayingId(null);
+        } else {
+            currentAudio.play();
+            setPlayingId(id);
+        }
+    };
+
+    const handleEnded = id => {
+        setPlayingId(null);
+        setProgressMap(prev => ({ ...prev, [id]: 0 }));
+    };
+
+    const handleSeekStart = (id, duration, e) => {
+        const bar = e.currentTarget;
+        const update = x => {
+            const rect = bar.getBoundingClientRect();
+            const ratio = Math.min(Math.max((x - rect.left) / rect.width, 0), 1);
+            const time = ratio * duration;
+            const audio = audioRefs.current[id];
+            if (audio) audio.currentTime = time;
+            setProgressMap(prev => ({ ...prev, [id]: time }));
+        };
+        update(e.clientX);
+        setDraggingId(id);
+        const onMove = ev => update(ev.clientX);
+        const onUp = () => {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            setDraggingId(null);
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+    };
 
     return (
-        <div className={styles['voice-player-wrapper']}>
-            <div className={styles['voice-player-bubble']}>
-                <div className={styles.header}>
-                    <span className={styles.location}>{location || current.location || '未知位置'}</span>
-                    <span className={styles['header-time']}>{current.time}</span>
-                </div>
-
-                <div className={styles['track-list']}>
-                    {tracks.map(track => (
-                        <div
-                            key={track.id}
-                            className={`${styles['track-item']}${track.id === current.id ? ' ' + styles.active : ''}`}
-                            onClick={() => selectTrack(track)}
-                        >
-                            {track.id === current.id ? (
-                                <div className={styles['track-badge']}>
-                                    <WaveIcon />
-                                    <span className={styles['track-title']}>{track.title}</span>
-                                </div>
-                            ) : (
-                                <span className={`${styles['track-title']} ${styles.plain}`}>{track.title}</span>
-                            )}
-                            <span className={styles['track-time']}>{track.time}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <div className={styles['progress-bar']}>
-                    <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={progress}
-                        onChange={seek}
-                    />
-                    <div className={styles['time-labels']}>
-                        <span className={styles.elapsed}>{current.time}</span>
-                        <span className={styles.remaining}>{formatRemaining()}</span>
+        <div className={styles.container}>
+            {/* 音频选择与进度容器 */}
+            <div className={styles.leftSection}>
+                <div ref={menuContainerRef}>
+                    <div className={styles.title} onClick={() => setMenuOpen(o => !o)}>
+                        {selected.name || '音频'}
+                        <span className={styles.arrow}>{menuOpen ? '▲' : '▼'}</span>
                     </div>
-                </div>
-
-                <audio ref={audioRef} src={current.src} preload="metadata" />
-            </div>
-
-            <div className={styles['control-button']} onClick={togglePlay}>
-                {playing ? (
-                    <>
-                        <div className={styles.bar}></div>
-                        <div className={styles.bar}></div>
-                    </>
-                ) : (
-                    <div className={styles['play-triangle']}></div>
+                {menuOpen && (
+                    <ul className={styles.menu}>
+                        {audioList.map(item => (
+                            <li
+                                key={item.id}
+                                className={item.id === selectedId ? styles.active : ''}
+                                onClick={() => {
+                                    setSelectedId(item.id);
+                                    setMenuOpen(false);
+                                    if (item.id !== playingId) {
+                                        setPlayingId(null);
+                                    }
+                                }}
+                            >
+                                {item.name}
+                            </li>
+                        ))}
+                    </ul>
                 )}
+                </div>
+                {/* 音频进度条和时间显示 */}
+                <div className={styles.progressBar}
+                     onMouseDown={e => handleSeekStart(selected.id, selected.duration, e)}>
+                    <div className={styles.progress} style={{width: `${percent}%`}}/>
+                    <div className={styles.dragHandle} style={{left: `${percent}%`}}/>
+                </div>
+                <div className={styles.timeRow}>
+                <span className={styles.current}>{formatTime(currentTime)}</span>
+                    <span className={styles.total}>-{formatTime(selected.duration - currentTime)}</span>
+                </div>
             </div>
+            {/* 播放按钮单独容器 */}
+            <div className={styles.rightSection}>
+                <button className={styles.playBtn} onClick={() => handlePlayPause(selected.id)}>
+                    <span className={isPlaying ? styles.pauseIcon : styles.playIcon} />
+                </button>
+            </div>
+            <audio
+                ref={el => { audioRefs.current[selected.id] = el; }}
+                src={`http://localhost:8080${selected.audioUrl}`}
+                onTimeUpdate={() => handleTimeUpdate(selected.id)}
+                onEnded={() => handleEnded(selected.id)}
+            />
         </div>
     );
 }
 
-export default VoicePlayer;
+VoiceComponents.propTypes = {
+    audioList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            audioUrl: PropTypes.string.isRequired,
+            name: PropTypes.string,
+            duration: PropTypes.number.isRequired
+        })
+    ).isRequired
+};
