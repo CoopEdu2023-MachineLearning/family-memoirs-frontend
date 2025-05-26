@@ -1,21 +1,30 @@
 import React from 'react';
-    import PropTypes from 'prop-types';
-    import styles from './index.module.scss';
+import PropTypes from 'prop-types';
+import styles from './index.module.scss';
 
-    const Tags = ({ tags }) => {
-        return (
-            <div className={styles.tags}>
-                {tags.map((tag, idx) => (
-                    <span key={idx} className={styles['tags__item']}>
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        );
-    };
+const TagComponents = ({ tags }) => {
+    if (!tags || tags.length === 0) {
+        return null;
+    }
 
-    Tags.propTypes = {
-        tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    };
+    return (
+        <div className={styles.tags}>
+            {tags.map((tag) => (
+                <button key={tag.id} className={styles['tags__item']}>
+                    {tag.name}
+                </button>
+            ))}
+        </div>
+    );
+};
 
-    export default Tags;
+TagComponents.propTypes = {
+    tags: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+        })
+    ),
+};
+
+export default TagComponents;
