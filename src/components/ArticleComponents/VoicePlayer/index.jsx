@@ -122,7 +122,6 @@ export default function VoiceComponents({ audioList }) {
                 <div className={styles.progressBar}
                      onMouseDown={e => handleSeekStart(selected.id, selected.duration, e)}>
                     <div className={styles.progress} style={{width: `${percent}%`}}/>
-                    <div className={styles.dragHandle} style={{left: `${percent}%`}}/>
                 </div>
                 <div className={styles.timeRow}>
                 <span className={styles.current}>{formatTime(currentTime)}</span>
