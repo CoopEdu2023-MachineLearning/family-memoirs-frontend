@@ -7,16 +7,9 @@
   align-items: center;
   font-size: 36px;
   position: relative;
-  font-family: "FZKai-Z03 Regular", serif;
+  font-family: FZKai-Z03, serif;
   perspective: 1000px;
-  transform: rotate3d(0, 0, 0, 0deg);
-  &:hover {
-    transform: rotate3d(-1 , -1, 0, 45deg);
-    transition: transform 0.6s;
-  }
-
   .topText {
-    font-family: "FZKai-Z03 Regular", serif;
     color: rgba(255, 255, 255, 0.30);
     font-size: 36px;
     font-style: normal;

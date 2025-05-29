@@ -6,6 +6,35 @@
   align-items: center;
   font-family: "PingFang SC", sans-serif;
   font-size: 16px;
+  .sendButton {
+    border-radius: 1000px;
+    width: 100px;/* 在 SignUp.module.scss 文件底部添加 */
+    @media (max-width: 600px) {
+      .root {
+        .center {
+          width: 95vw;
+          min-width: unset;
+          height: auto;
+          padding: 16px;
+        }
+        .inputs {
+          width: 100%;
+        }
+        .input,
+        .codeInput {
+          width: 90vw;
+          min-width: 0;
+          max-width: 100%;
+        }
+        .signUpButton {
+          width: 90vw;
+          min-width: 0;
+          max-width: 100%;
+        }
+      }
+    }
+    margin-top: -15px;
+  }
   .title {
     font-family: FZKai-Z03, serif;
     font-size: 22px;
@@ -32,6 +61,12 @@
       flex: 1;
 
     }
+    .codeInput {
+      width: 200px;
+      height: 35px;
+      margin-top: -15px;
+      border-radius: 13px;
+    }
     .sub2 {
       flex: 1;
       display: flex;
@@ -55,14 +90,13 @@
       margin-top: 30px;
     }
     .input {
-
       width: 300px;
       height: 35px;
       margin-top: -15px;
       border-radius: 13px;
     }
     .signUpButton {
-      padding: 12px 0px;
+      padding: 12px;
       background-color: black;
       color: white;
       border-radius: 1000px;
@@ -73,4 +107,35 @@
     }
   }
 
+}
+@media (max-width: 600px) {
+  .root {
+    .center {
+      width: 90vw;
+      max-width: 385px;
+      min-width: 260px;
+      height: auto;
+      padding: clamp(10px, 5vw, 30px);
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    .inputs {
+      width: 100%;
+    }
+    .input,
+    .codeInput {
+      width: 80vw;
+      min-width: 120px;
+      max-width: 100%;
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    .signUpButton {
+      width: 80vw;
+      min-width: 120px;
+      max-width: 100%;
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    .title {
+      font-size: clamp(16px, 6vw, 22px);
+    }
+  }
 }

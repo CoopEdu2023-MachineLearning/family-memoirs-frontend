@@ -21,7 +21,7 @@ const DemoPage = ({ name }) => {
         {text + name}
       </div>
       <Button>Antd</Button>
-      <Card />
+      <Card place="呼和浩特市" eventTag="矿区" tagOne="煤矿场" tagTwo="资源枯竭"/>
 
     </>
   );

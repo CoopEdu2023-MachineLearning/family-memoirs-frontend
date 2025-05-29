@@ -7,12 +7,13 @@ import Checkbox from "antd/es/checkbox/Checkbox";
 import Card from "@components/CardComponent/index.jsx";
 
 function signUp() {
-    const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [confirmPassword, setConfirmPassword] = useState()
     const [email, setEmail] = useState()
     const [invitationCode, setInvitationCode] = useState()
     const [verificationCode, setVerificationCode] = useState()
+    const isButtonDisabled = !password || !confirmPassword || !email || !invitationCode || !verificationCode;
+
     function sendCode() {
         try {
             getEmailCodeApi(email).then(r => {
@@ -46,15 +47,17 @@ function signUp() {
                             <p className={styles.smallTitle}>验证码</p>
                             <Input size={"small"} variant={"outlined"} className={styles.input} onChange={(e) => setVerificationCode(e.target.value)} placeholder="输入验证码"></Input>
                             <p className={styles.smallTitle}>邀请码</p>
-                            <Input size={"small"} variant={"outlined"} className={styles.input} onChange={(e) => setInvitationCode(e.target.value)} placeholder="输入邀请码"></Input>
-                            <p className={styles.smallTitle}>密码</p>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <Input size={"small"} variant={"outlined"} className={styles.codeInput} onChange={(e) => setInvitationCode(e.target.value)} placeholder="输入邀请码"></Input>
+                                <Button className={styles.sendButton} onClick={() => sendCode()} style={{ marginLeft: '8px' }}>发送验证码</Button>
+                            </div>                            <p className={styles.smallTitle}>密码</p>
                             <Input.Password size={"small"} variant={"outlined"} className={styles.input} onChange={(e) => setPassword(e.target.value)} placeholder="输入密码"></Input.Password>
                             <p className={styles.smallTitle}>确认密码</p>
                             <Input.Password size={"small"} variant={"outlined"} className={styles.input} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="确认密码"></Input.Password>
                         </div>
                     </div>
                     <Checkbox className={styles.checkbox}>我已阅读并同意 《用户协议》《隐私协议》</Checkbox>
-                    <Button className={styles.signUpButton} type={"primary"} onClick={() => signUp()}>注册</Button>
+                    <Button disabled={isButtonDisabled} className={styles.signUpButton} type={"primary"} onClick={() => signUp()}>注册</Button>
                 </div>
 
 
