@@ -18,10 +18,9 @@ const WaterfallItem = ({ item }) => {
     <div key={item.id} className={styles.waterfallItem} ref={ref}>
       <InterviewCard
         avatar={item.avatar}
-        startYear = {item.startYear}
-        startMonth = {item.startMonth}
-        name={item.name}
-        genderInfo={item.description}
+        start = {item.startYear}
+        end = {item.endYear}
+        teller = {item.teller}
         description={item.text}
         location = {item.location}
         tags={item.tags.name}
