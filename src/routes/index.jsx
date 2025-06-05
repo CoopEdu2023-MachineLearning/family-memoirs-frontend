@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
-import DemoPage from '@pages/DemoPage';
 import HomePage from "@pages/HomePage";
+import TellerCreation from "@components/TellerCreation/index.jsx";
 
 
 const routes = [
@@ -19,12 +19,10 @@ const routes = [
     ]
   },
   {
-    path: '/home',
-    element: <DemoPage name='home' />
-  },
-  {
     path: '/demo',
-    element: <DemoPage />
+    element: <>
+      <TellerCreation/>
+    </>
   },
 ];
 

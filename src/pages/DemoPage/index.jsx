@@ -1,11 +1,10 @@
 import DemoComponents from "@components/DemoComponents";
-import TellerCreation from "@components/TellerCreation";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
 import { Card } from "@components/CardComponent";
 
-const DemoPage = ({ name }) => {
+export const DemoPage = ({ name }) => {
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -17,16 +16,7 @@ const DemoPage = ({ name }) => {
 
   return (
     <>
-      {/* <DemoComponents /> */}
-      <TellerCreation/>
-      <div className="title">
-        {text + name}
-      </div>
-      <Button>Antd</Button>
-      <Card />
-
     </>
   );
 }
 
-export default DemoPage;
