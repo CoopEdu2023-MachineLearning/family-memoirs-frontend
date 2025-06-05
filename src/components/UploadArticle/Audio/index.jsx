@@ -1,61 +1,100 @@
-import { Upload, Button, message, Typography } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Upload, Button, message, Space } from 'antd';
+import { SoundOutlined, CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import http from '../../../http';
 
-const { Title } = Typography;
+function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId }) {
 
-function Audio({ audioList, setAudioList, articleId, setUploading }) {
+    const [uploadingAudio, setUploadingAudio] = useState(false);
 
-    function handleOnChange({ fileList }) {
-        const newAudioList = [...fileList];
-        newAudioList.forEach(audio => {
-            audio.preview = true;
-        });
-        setAudioList(newAudioList);
+    const handleOnChange = ({ file }) => {
+        if (file.status === 'uploading') {
+            setUploadingAudio(true);
+        } else if (file.status === 'done') {
+            setUploadingAudio(false);
+            setAudioId(file.response.id);
+            setAudioUrl(file.response.url);
+        } else if (file.status === 'error' || file.error) {
+            setUploadingAudio(false);
+            message.error('上传失败');
+        }
     };
 
-    function handleOnSuccess() {
-        setUploading(false);
-    }
+    const handleError = (error) => {
+        setUploadingAudio(false);
+        message.error(`上传失败: ${error.message || '未知错误'}`);
+    };
 
-    function handleRemove(audioItem) {
-        if (audioItem.status !== 'done' && audioItem.status !== undefined) {
+    const handleRemove = () => {
+        if (uploadingAudio) {
+            message.warning('文件正在上传中，无法删除');
+            return false;
+        }
+
+        if (audioId) {
+            return http.delete(`/files/${audioId}`)
+                .then(() => {
+                    setAudioId(null);
+                    setAudioUrl(null);
+                    return true;
+                })
+                .catch(error => {
+                    message.error(`删除失败：${error.message}`);
+                    return false;
+                });
+        } else {
+            setAudioId(null);
+            setAudioUrl(null);
             return true;
         }
-        return http.delete(`/files/${audioItem.response?.id || audioItem.uid}`)
-            .then(() => true)
-            .catch(error => {
-                message.error(`删除失败：${error.message}`);
-                return false;
-            });
-    }
+    };
 
     return (
         <>
-            <Title level={5}>Audio</Title>
+            {audioUrl && (
+                <div style={{ marginBottom: 16, position: 'relative' }}>
+                    <div style={{ border: '1px solid #d9d9d9', borderRadius: 4, padding: 12 }}>
+                        <Space align="center">
+                            <SoundOutlined style={{ fontSize: 20, color: '#1890ff' }} />
+                            <audio controls style={{ width: 'calc(100% - 40px)' }} src={audioUrl} />
+                        </Space>
+                    </div>
+                    <Button
+                        type="text"
+                        icon={<CloseOutlined />}
+                        onClick={handleRemove}
+                        style={{ position: 'absolute', right: -8, top: -8, zIndex: 10 }}
+                    />
+                </div>
+            )}
+
             <Upload
-                multiple
                 accept="audio/*"
-                fileList={audioList}
+                fileList={audioId ? [{
+                    uid: audioId,
+                    status: 'done',
+                    name: audioUrl?.split('/').pop() || 'audio-file',
+                    response: { id: audioId, url: audioUrl }
+                }] : []}
                 onChange={handleOnChange}
                 onRemove={handleRemove}
-                showUploadList={{ showRemoveIcon: true }}
+                onError={handleError}
+                showUploadList={false}
                 action={`/files/${articleId}/upload`}
                 beforeUpload={() => {
-                    setUploading(true);
+                    setUploadingAudio(true);
                     return true;
                 }}
-                onSuccess={handleOnSuccess}
             >
                 <Button
                     icon={<UploadOutlined />}
-                    style={{ margin: '10px 0' }}
+                    disabled={uploadingAudio}
                 >
-                    上传音频（最大 100MB）
+                    {uploadingAudio ? '上传中...' : '上传音频（最大 100MB）'}
                 </Button>
             </Upload>
         </>
     );
 }
 
-export default Audio;
+export default AudioComponent;

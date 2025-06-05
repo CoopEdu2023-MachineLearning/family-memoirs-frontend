@@ -1,41 +1,48 @@
 import { useEffect, useState } from 'react';
 import { Select, message } from 'antd';
-import http from '../../../http';
+import getNarratorListApi from '../../../apis/getNarratorListApi';
 
-
-function MainNarrator(mainNarrator, setMainNarrator) {
-
+function MainNarrator({ mainNarrator, setMainNarrator }) {
     const [list, setList] = useState([]);
-
-    function errorHandler(error) {
-        const response = {
-            content: '查找讲述者失败： ' + error.message,
-            stack: true
-        }
-        message.error(response)
-        setVisible(false)
-    }
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        http.get('/main_narrator')
-            .then((data) => setList(data))
-            .catch(error => errorHandler(error))
+        setLoading(true);
+        getNarratorListApi()
+            .then((data) => {
+                const formattedList = data.map((item) => ({
+                    value: item.id.toString(),
+                    label: item.name,
+                    ...item
+                }));
+                setList(formattedList);
+            })
+            .catch((error) => {
+                message.error(`获取讲述者失败：${error.message}`);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }, []);
 
-    list.forEach((item) => {
-        item.value = item.id.toString();
-        item.label = item.name;
-    });
+    const handleSelect = (value, option) => {
+        setMainNarrator(value);
+    };
 
     return (
         <Select
-            clickToHide={true}
-            value={mainNarrator}
+            value={mainNarrator?.toString() || null}
             placeholder="选择主要的讲述者"
-            style={{ width: 180, margin: '10px 0 10px 0' }}
-            optionList={list}
-            onSelect={(_value, option) => (setMainNarrator(option.name))}
+            style={{ width: 180, margin: '10px 0' }}
+            onSelect={handleSelect}
+            loading={loading}
+            allowClear
         >
+            {list.map((item) => (
+                <Select.Option key={item.value} value={item.value}>
+                    {item.label}
+                </Select.Option>
+            ))}
         </Select>
     );
 }

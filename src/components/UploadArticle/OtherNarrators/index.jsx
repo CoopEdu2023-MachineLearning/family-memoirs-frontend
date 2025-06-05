@@ -24,8 +24,7 @@ function OtherNarrators({ otherNarrators, setOtherNarrators }) {
     useEffect(() => {
         if (debouncedSearch) {
             setLoading(true);
-            http
-                .get(`/users/find`, { params: { name: debouncedSearch } })
+            http.get(`/users/find`, { params: { name: debouncedSearch } })
                 .then((res) => {
                     setOptions([
                         {

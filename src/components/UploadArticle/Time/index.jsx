@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DatePicker, Select } from 'antd';
-import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -9,19 +8,25 @@ const decades = [];
 for (let y = 1900; y <= 2020; y += 10) {
     decades.push({
         label: `${y}s`,
-        start: dayjs(`${y}-01-01`),
-        end: dayjs(`${y + 9}-12-31`),
     });
 }
 
-function Time() {
-    const [range, setRange] = useState(null);
+function Time({ timeFilter, setTimeFilter }) {
 
-    const onSelectDecade = (value) => {
-        const decade = decades.find(d => d.label === value);
-        if (decade) {
-            setRange([decade.start, decade.end]);
-        }
+    const onSelectDecade = (decadeLabel) => {
+        setTimeFilter({
+            type: decadeLabel ? 'decade' : null,
+            decade: decadeLabel,
+            dateRange: [null, null]
+        });
+    };
+
+    const onDateChange = (dates) => {
+        setTimeFilter({
+            type: dates ? 'range' : null,
+            decade: null,
+            dateRange: dates
+        });
     };
 
     return (
@@ -31,16 +36,21 @@ function Time() {
                 placeholder="选择年代"
                 onChange={onSelectDecade}
                 allowClear
+                value={timeFilter.decade}
+                disabled={timeFilter.type === 'range'}
             >
                 {decades.map(d => (
                     <Option key={d.label} value={d.label}>{d.label}</Option>
                 ))}
             </Select>
+
             <RangePicker
-                value={range}
-                onChange={dates => setRange(dates)}
+                picker="month"
+                value={timeFilter.dateRange}
+                onChange={onDateChange}
                 style={{ width: 300 }}
                 placeholder={['开始时间', '结束时间']}
+                disabled={timeFilter.type === 'decade'}
             />
         </>
     );

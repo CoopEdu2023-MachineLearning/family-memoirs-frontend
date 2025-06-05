@@ -2,10 +2,15 @@ import { Input } from 'antd'
 
 const { TextArea } = Input;
 
-function Context() {
+function Context({ context, setContext }) {
     return (
         <>
-            <TextArea rows={4} placeholder="Write your context here..." />
+            <TextArea
+                rows={4}
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                placeholder="Enter context..."
+            />
         </>
     )
 }
