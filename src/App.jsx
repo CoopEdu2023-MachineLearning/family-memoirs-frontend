@@ -7,7 +7,7 @@ import { Empty } from "antd";
 const App = () => {
   const router = createBrowserRouter(routes);
   return (
-    <ErrorBoundary fallback={<Empty title={'Something went wrong'} />}>
+    <ErrorBoundary fallback={<Empty description='Something went wrong' />}>
       <RouterProvider router={router} />
     </ErrorBoundary>
   );
