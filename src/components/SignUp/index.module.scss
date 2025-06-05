@@ -1,0 +1,158 @@
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "PingFang SC", sans-serif;
+  font-size: 16px;
+  z-index: 1000;
+  
+  .title {
+    font-family: FZKai-Z03, serif;
+    font-size: 22px;
+    font-weight: lighter;
+  }
+  
+  .center {
+    position: relative;
+    display: flex;
+    width: 385px;
+    height: 560px; // 从520px增加到560px
+    padding: 30px;
+    background-color: white;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    
+    .inputs {
+      width: 326px;
+      display: flex;
+      border-radius: 13px;
+      align-items: center;
+    }
+    
+    .sub1 {
+      flex: 1;
+    }
+    
+    .codeInput {
+      width: 200px;
+      height: 35px;
+      margin-top: -15px;
+      border-radius: 13px;
+    }
+    
+    .sendButton {
+      border-radius: 1000px;
+      width: 100px;
+      margin-top: -15px;
+      margin-left: 8px;
+    }
+    
+    .sub2 {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      
+      .send {
+        margin-left: 10px;
+        margin-top: 0;
+        background-color: #f4f4f4;
+        color: black;
+        width: 100px;
+        height: 45px;
+      }
+    }
+    
+    .smallTitle {
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .checkbox {
+      margin-top: 30px;
+    }
+    
+    .input {
+      width: 300px;
+      height: 35px;
+      margin-top: -15px;
+      border-radius: 13px;
+    }
+    
+    .signUpButton {
+      padding: 12px;
+      background-color: black;
+      color: white;
+      border-radius: 1000px;
+      margin-top: 5px;
+      width: 183px;
+      height: 33.63px;
+      font-size: 12px;
+    }
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    
+    &:hover {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+  }
+}
+
+// 移动端响应式设计
+@media (max-width: 600px) {
+  .root {
+    .center {
+      width: 90vw;
+      max-width: 385px;
+      min-width: 260px;
+      height: auto;
+      padding: clamp(10px, 5vw, 30px);
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    
+    .inputs {
+      width: 100%;
+    }
+    
+    .input,
+    .codeInput {
+      width: 80vw;
+      min-width: 120px;
+      max-width: 100%;
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    
+    .signUpButton {
+      width: 80vw;
+      min-width: 120px;
+      max-width: 100%;
+      font-size: clamp(12px, 4vw, 16px);
+    }
+    
+    .title {
+      font-size: clamp(16px, 6vw, 22px);
+    }
+  }
+}

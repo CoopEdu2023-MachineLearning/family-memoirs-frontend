@@ -1,23 +1,55 @@
-.container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  z-index: 1;
-}
+.root {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  
+  :global {
+    .box {
+      display: flex;
+      justify-content: end;
+      flex-direction: column;
+      transition: opacity 0.5s ease;
+    }
 
-.box {
-  width: 260px;
-  height: 180px;
-  background: linear-gradient(135deg, rgba(52, 152, 219, 0.6), rgba(255, 255, 255, 0.2));
-  border-radius: 20px;
-  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3);
-  position: absolute;
-  transform-origin: center;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  /* 添加这一行，确保元素居中 */
-  transform: translate(-50%, -50%);
+    // 匹配的元素保持正常显示
+    .matched {
+      opacity: 1;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 4px;
+        pointer-events: none;
+      }
+    }
+    
+    // 不匹配的元素透明度降低
+    .dimmed {
+      opacity: 0.1;
+    }
+
+    .time {
+      position: absolute;
+      left: 100%;
+      color: #00000080;
+    }
+
+    .timeText{
+      position: absolute;
+      left: 50px;
+      bottom: 0;
+    }
+    .line{
+      background: #00000080;
+      position: absolute;
+      bottom: 0.5px;
+      width: 85px;
+      height: 0.5px;
+    }
+  }
 }

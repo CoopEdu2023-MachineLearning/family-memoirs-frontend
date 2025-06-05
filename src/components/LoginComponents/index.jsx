@@ -1,11 +1,12 @@
 import React from 'react';
-import {Button, Input, message} from 'antd';
+import {Button, Input, message, Checkbox} from 'antd';
 import styles from './index.module.scss';
-import { Typography, Checkbox } from "antd";
-import {useNavigate} from "react-router-dom";
+import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 import http from "@http";
+import { CloseOutlined } from '@ant-design/icons';
 
-const LoginComponents = () => {
+const LoginComponents = ({ onSwitchToSignup, onClose }) => {
   const { Title, Link, Text } = Typography;
   const [ isAllowed, setIsAllowed ] = React.useState(false);
   const [ email, setEmail ] = React.useState('');
@@ -29,16 +30,19 @@ const LoginComponents = () => {
     
     setLoading(true);
     try {
-      // 这里直接拿到 token
       const token = await http.post('/users/login', {
-        username: email,
+        email: email,
         password: password
       });
       localStorage.setItem('token', token);
       message.success('登录成功');
+      // 在handleLogin函数的成功处理中添加：
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
+      onClose(); // 添加这行来关闭弹窗
       navigate('/home');
     } catch (error) {
-      // error.message 即为后端返回的 message
       message.error(error.message || '登录失败，请稍后重试');
       console.error('登录失败:', error);
     } finally {
@@ -48,39 +52,53 @@ const LoginComponents = () => {
 
   return (
     <div className={styles.root}>
-      <div className='inputGroup'>
-        <Title level={4}>登录「家书万金」</Title>
-        <Text>邮箱</Text>
-        <Input 
-          className='inputBar' 
-          placeholder="输入邮箱" 
-          value={email}
-          onChange={handleEmailChange} 
+      <div className={styles.container}>
+        <Button 
+          className={styles.closeButton}
+          type="text" 
+          icon={<CloseOutlined />} 
+          onClick={onClose}
         />
-        <Text>密码</Text>
-        <Input.Password 
-          className='inputBar' 
-          placeholder="输入密码" 
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <Text onClick={()=>{navigate('/forget')}} underline>忘记密码</Text>
+        <h1 className={styles.title}>登录「家书万金」</h1>
+        
+        <div className={styles.inputGroup}>
+          <p className={styles.label}>邮箱</p>
+          <Input 
+            className={styles.input}
+            placeholder="输入邮箱" 
+            value={email}
+            onChange={handleEmailChange} 
+          />
+          <div className={styles.passwordGroup}>
+            <Text className={styles.label}>密码</Text>
+            <Text className={styles.forgotPassword} onClick={()=>{navigate('/forget')}}>忘记密码</Text>
+          </div>
+
+          <Input.Password 
+            className={styles.input}
+            placeholder="输入密码" 
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        
 
         <Button 
+          className={styles.loginButton}
           onClick={handleLogin} 
-          block 
           disabled={!isAllowed}
           loading={loading}
         >
           登录
         </Button>
-        <div className='footer'>
-          <div className='leftFooter'>
+        
+        <div className={styles.footer}>
+          <div className={styles.leftFooter}>
             <Text>没有账号？</Text>
-            <Button className='registerButton' type="link" onClick={()=>{navigate('/register')}}>注册</Button>
+            <Button className={styles.registerButton} type="link" onClick={onSwitchToSignup}>注册</Button>
           </div>
-          <div className={'rightFooter'}>
-            <Checkbox onClick={()=>{setIsAllowed(!isAllowed)}}>同意<Link>协议</Link></Checkbox>
+          <div className={styles.rightFooter}>
+            <Checkbox onChange={(e) => setIsAllowed(e.target.checked)}>同意<Link>协议</Link></Checkbox>
           </div>
         </div>
       </div>

@@ -1,5 +1,11 @@
-import http from "@http";
+import http from "@http/index.js";
 
 export const signup = (email, username, password, invitationCode, verificationCode) => {
-    return http.get(`/email/getCode?email=${email}, username=${username}, password=${password}, invitationCode=${invitationCode}, verificationCode=${verificationCode}`);
+    return http.post('/users/signup', {
+        email,
+        username,
+        password,
+        invitationCode,
+        verificationCode
+    });
 }

@@ -10,10 +10,8 @@
   font-family: "FZKai-Z03 Regular", serif;
   perspective: 1000px;
   transform: rotate3d(0, 0, 0, 0deg);
-  &:hover {
-    transform: rotate3d(-1 , -1, 0, 45deg);
-    transition: transform 0.6s;
-  }
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
 
   .topText {
     font-family: "FZKai-Z03 Regular", serif;
