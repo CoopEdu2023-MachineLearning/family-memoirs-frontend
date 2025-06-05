@@ -10,9 +10,9 @@ const truncate = (text, maxLength) => {
   return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
 };
 
-const InterviewCard = ({ avatar, name, teller = null, description, tags = [], start = "?", end ="?" }) => {
+const InterviewCard = ({ location,avatar, name, teller = null, description, tags = [], start = "?", end ="?" }) => {
   const truncatedTitle = teller
-    ? truncate(`${start}年 - ${end}年   ${teller.birthplace}`, 25)
+    ? truncate(`${start}年 - ${end}年   ${location}`, 25)
     : "无口述者信息";
   const truncatedText = truncate(description, 80);
   const truncatedGenderInfo = teller ? truncate(teller.gender || "未知", 16) : "未知";

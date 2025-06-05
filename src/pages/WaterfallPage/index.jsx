@@ -7,6 +7,7 @@ import { useEstimateHeight } from '@hooks/useEstimateHeight';
 import Navbar from '@components/navbar'
 import { Layout } from "antd";
 import { getArticles } from "../../apis";
+import { da } from "@faker-js/faker";
 
 const { Content } = Layout;
 
@@ -31,7 +32,6 @@ const WaterfallItem = ({ item }) => {
 
 const WaterfallPage = () => {
   const [data, setData] = useState({ content: [] });
-  console.log(data)
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false); // To handle loading state
@@ -39,7 +39,8 @@ const WaterfallPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const initialData = await getArticles(0, 10); // Fetching initial data
+        const initialData = await getArticles(1, 10); // Fetching initial data
+        console.log(initialData)
         setData(initialData);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -51,18 +52,31 @@ const WaterfallPage = () => {
     fetchData();
   }, []); // Run this only once when the component mounts
 
-  const handleLoadMore = () => {
-    console.log("加载更多触发");
-    setTimeout(() => {
-      const newItems = getArticles(page + 1, 10).content;
-      if (newItems.length === 0) {
-        setHasMore(false);
-      } else {
-        setData(prev => [...prev, ...newItems]);
-        setPage(p => p + 1);
-      }
-    }, 800); // 模拟网络延迟
-  };
+  const handleLoadMore = async () => {
+  console.log("加载更多触发");
+  setLoading(true);
+  try {
+    const newData = await getArticles(page + 1, 10);
+    const newItems = newData.content;
+    if (newItems.length === 0) {
+      setHasMore(false);
+      console.log(hasMore);
+    } else {
+      // 如果 data 是分页结构：{ content: [...] }
+      setData(prev => ({
+        ...prev,
+        content: [...prev.content, ...newItems]
+      }));
+
+      setPage(p => p + 1);
+    }
+  } catch (error) {
+    console.error("加载更多失败：", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // 修改 itemRender 函数，直接返回 WaterfallItem 组件
   const itemRender = (item) => <WaterfallItem key={item.id} item={item} />;
