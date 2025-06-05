@@ -3,19 +3,20 @@ import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
 import HomePage from "@pages/HomePage";
 import TellerCreation from "@components/TellerCreation/index.jsx";
 
-
 const routes = [
+  {
+    index: true,
+    element: <Navigate to='/home' replace />,
+  },
+  {
+    path: '/home',
+    element: <HomePage />
+  },
   {
     element: <PrivateProtectedRoute />,
     children: [
-      {
-        index: true,
-        element: <Navigate to='/home' replace />,
-      },
-      {
-        path: '/home',
-        element: <HomePage />
-      },
+      // 这里放需要登录才能访问的页面
+      // 例如：个人中心、设置页面等
     ]
   },
   {
@@ -23,9 +24,6 @@ const routes = [
     element: <>
       <TellerCreation/>
     </>
-  },
-  {
-
   }
 ];
 
