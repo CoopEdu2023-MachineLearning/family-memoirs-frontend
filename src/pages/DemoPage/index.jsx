@@ -1,4 +1,5 @@
 import DemoComponents from "@components/DemoComponents";
+import TellerCreation from "@components/TellerCreation";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
@@ -15,7 +16,8 @@ const DemoPage = ({ name }) => {
 
   return (
     <>
-      <DemoComponents />
+      {/* <DemoComponents /> */}
+      <TellerCreation/>
       <div className="title">
         {text + name}
       </div>
