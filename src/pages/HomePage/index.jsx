@@ -7,7 +7,7 @@ import SignUp from "@components/SignUp/index.jsx";
 
 const HomePage = () => {
   const [ filterTags, setFilterTags] = useState([]);
-  const [ loginState, setLoginState] = useState('');
+  const [ homePageState, setHomePageState] = useState('homePage');
   const [ isLoggedIn, setIsLoggedIn] = useState(false);
   
   // 检查JWT token是否存在
@@ -20,11 +20,12 @@ const HomePage = () => {
   const handleAuthButtonClick = () => {
     if (isLoggedIn) {
       // 如果已登录，可以跳转到个人中心或显示用户菜单
+      setHomePageState('me');
       console.log('跳转到个人中心');
       // 这里可以添加跳转逻辑或显示用户菜单
     } else {
       // 如果未登录，显示登录弹窗
-      setLoginState('login');
+      setHomePageState('login');
       console.log('login');
     }
   };
@@ -32,7 +33,7 @@ const HomePage = () => {
   // 处理登录成功后的状态更新
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-    setLoginState('');
+    setHomePageState('homePage');
   };
   
   return (
@@ -48,22 +49,31 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <DiagonalScrollAnimation filterTags={filterTags} className='body'/>
-      <div className="tags">
-        <Tags setFilterTags={setFilterTags}/>
-      </div>
       {
-        loginState === 'login' && <LoginComponents 
-          onSwitchToSignup={() => setLoginState('signup')} 
-          onClose={() => setLoginState('')}
+        homePageState === 'homePage' &&
+        <>
+          <DiagonalScrollAnimation filterTags={filterTags} className='body'/>
+          <div className="tags">
+            <Tags setFilterTags={setFilterTags}/>
+          </div>
+        </>
+      }
+
+      {
+        homePageState === 'login' && <LoginComponents
+          onSwitchToSignup={() => setHomePageState('signup')}
+          onClose={() => setHomePageState('')}
           onLoginSuccess={handleLoginSuccess}
         />
       }
       {
-        loginState === 'signup' && <SignUp 
-          onSwitchToLogin={() => setLoginState('login')} 
-          onClose={() => setLoginState('')}
+        homePageState === 'signup' && <SignUp
+          onSwitchToLogin={() => setHomePageState('login')}
+          onClose={() => setHomePageState('')}
         />
+      }
+      {
+        homePageState === 'me' && <></>
       }
     </div>
   );

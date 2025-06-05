@@ -24,6 +24,9 @@ const routes = [
       <TellerCreation/>
     </>
   },
+  {
+
+  }
 ];
 
 export default routes;
