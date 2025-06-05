@@ -5,6 +5,19 @@
   width: 18vw;
 }
 
+.card:hover {
+  background: #ffffff; // 白色背景
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); // 更强阴影
+  transform: translateY(-5px); // 轻微上移效果
+}
+
+
+.card:active {
+  background: #e9eaec; // 比默认状态更深的灰色背景
+  box-shadow: none; // 移除阴影
+  transform: translateY(0); // 取消上移效果
+}
+
 .header {
   font-size: 20px;
   font-weight: 500;
