@@ -1,40 +1,32 @@
 import { Navigate } from 'react-router-dom';
-import { PrivateProtectedRoute, PublicProtectedRoute } from './ProtectedRoutes';
-import DemoPage from '@pages/DemoPage';
-import WaterfallPage from '../pages/WaterfallPage';
+import Layout from '@components/Layout/index.jsx';
 import HomePage from "@pages/HomePage";
 import TellerCreation from "@components/TellerCreation/index.jsx";
+import WaterfallPage from "@pages/WaterfallPage/index.jsx";
 
 const routes = [
   {
-    index: true,
-    element: <Navigate to='/home' replace />,
-  },
-  {
-    path: '/home',
-    element: <HomePage />
-  },
-  {
-    element: <PrivateProtectedRoute />,
+    path: '/',
+    element: <Layout />,
     children: [
-      // 这里放需要登录才能访问的页面
-      // 例如：个人中心、设置页面等
+      {
+        index: true,
+        element: <Navigate to='/home' replace />,
+      },
+      {
+        path: '/home',
+        element: <HomePage />
+      },
+      {
+        path: '/homeWaterfall',
+        element: <WaterfallPage />
+      }
     ]
   },
   {
-    path: '/home',
-    element: <DemoPage name='home' />
-  },
-  {
     path: '/demo',
-    element: <>
-      <TellerCreation/>
-    </>
-  },
-  {
-    path: '/waterfall',
-    element: <WaterfallPage/>
-  },
+    element: <TellerCreation/>
+  }
 ];
 
 export default routes;

@@ -1,44 +1,19 @@
 .root {
   overflow-x: hidden;
+  
   :global {
-
-    .tags{
+    .tags {
       position: fixed;
       bottom: 60px;
       right: 60px;
     }
 
-    .header{
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: initial;
-      position: fixed;
-      width: 100vw;
-      top:40px;
-      padding: 20px 60px;
-      box-sizing: border-box;
-    }
-    .logo{
-      width: 156.183px;
-      height: 112px;
-      flex-shrink: 0;
-    }
-    .loginWindow{
+    .loginWindow {
       position: fixed;
       z-index: 100;
       top: 40px;
       right: 60px;
       display: flex;
-    }
-    .topBar{
-      display: inline-flex;
-      justify-content: center;
-      align-items: flex-start;
-      font-size: 13px;
-      color: var(---, rgba(0, 0, 0, 0.40));
-      gap: 50px;
-      flex-shrink: 0;
     }
   }
 }

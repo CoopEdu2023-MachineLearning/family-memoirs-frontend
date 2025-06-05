@@ -4,12 +4,11 @@ import Waterfall from "@components/waterfall";
 import styles from './index.module.scss';
 import InterviewCard from "@components/Waterfallcard";
 import { useEstimateHeight } from '@hooks/useEstimateHeight';
-import Navbar from '@components/navbar'
-import { Layout } from "antd";
 import { getArticles } from "../../apis";
 
-const { Content } = Layout;
-
+// 移除antd的Layout导入，因为已经有外层的AppLayout了
+// import { Layout } from "antd";
+// const { Content } = Layout;
 
 // 新建组件 WaterfallItem，内部调用 Hook
 const WaterfallItem = ({ item }) => {
@@ -34,12 +33,13 @@ const WaterfallPage = () => {
   console.log(data)
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false); // To handle loading state
+  const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const initialData = await getArticles(0, 10); // Fetching initial data
+        const initialData = await getArticles(0, 10);
         setData(initialData);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -49,7 +49,7 @@ const WaterfallPage = () => {
     };
 
     fetchData();
-  }, []); // Run this only once when the component mounts
+  }, []);
 
   const handleLoadMore = () => {
     console.log("加载更多触发");
@@ -61,25 +61,23 @@ const WaterfallPage = () => {
         setData(prev => [...prev, ...newItems]);
         setPage(p => p + 1);
       }
-    }, 800); // 模拟网络延迟
+    }, 800);
   };
 
-  // 修改 itemRender 函数，直接返回 WaterfallItem 组件
   const itemRender = (item) => <WaterfallItem key={item.id} item={item} />;
+  
   return (
-    <Layout>
-      <Navbar className={styles.navbar} />
-      <Content className={styles.waterfallContainer}>
-        <Waterfall
-          items={data.content}
-          marginX={20}
-          itemRender={itemRender}
-          cols={5}
-          onLoadMore={handleLoadMore}
-          hasMore={hasMore}
-        />
-      </Content>
-    </Layout>
+    // 直接使用div容器，不再嵌套antd的Layout
+    <div className={styles.waterfallContainer}>
+      <Waterfall
+        items={data.content}
+        marginX={20}
+        itemRender={itemRender}
+        cols={5}
+        onLoadMore={handleLoadMore}
+        hasMore={hasMore}
+      />
+    </div>
   );
 };
 

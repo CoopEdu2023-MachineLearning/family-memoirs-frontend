@@ -4,6 +4,7 @@ import styles from './index.module.scss';
 import {Tags} from "@components/Tags/index.jsx";
 import LoginComponents from "@components/LoginComponents/index.jsx";
 import SignUp from "@components/SignUp/index.jsx";
+import Header from "@components/Header/index.jsx";
 
 const HomePage = () => {
   const [ filterTags, setFilterTags] = useState([]);
@@ -38,19 +39,12 @@ const HomePage = () => {
   
   return (
     <div className={styles.root}>
-      <div className='header'>
-        <img src='../../../public/logo.svg' alt="logo" className={styles.logo}/>
-
-        <div className='topBar'>
-          <div>购买实体专辑</div>
-          <div>关于我们</div>
-          <div onClick={handleAuthButtonClick}>
-            {isLoggedIn ? '我的' : '登录/注册'}
-          </div>
-        </div>
-      </div>
-      {
-        homePageState === 'homePage' &&
+      <Header 
+        onAuthButtonClick={handleAuthButtonClick}
+        isLoggedIn={isLoggedIn}
+      />
+      
+      {homePageState === 'homePage' &&
         <>
           <DiagonalScrollAnimation filterTags={filterTags} className='body'/>
           <div className="tags">
@@ -59,21 +53,19 @@ const HomePage = () => {
         </>
       }
 
-      {
-        homePageState === 'login' && <LoginComponents
+      {homePageState === 'login' && 
+        <LoginComponents
           onSwitchToSignup={() => setHomePageState('signup')}
-          onClose={() => setHomePageState('')}
+          onClose={() => setHomePageState('homePage')}
           onLoginSuccess={handleLoginSuccess}
         />
       }
-      {
-        homePageState === 'signup' && <SignUp
+      
+      {homePageState === 'signup' && 
+        <SignUp
           onSwitchToLogin={() => setHomePageState('login')}
-          onClose={() => setHomePageState('')}
+          onClose={() => setHomePageState('homePage')}
         />
-      }
-      {
-        homePageState === 'me' && <></>
       }
     </div>
   );
