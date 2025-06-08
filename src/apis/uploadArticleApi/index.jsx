@@ -1,7 +1,7 @@
 import http from "@http";
 
-const uploadArticleApi = (data) => {
-    return http.post(`/article/upload`, data);
+const uploadArticleApi = (articleId, data) => {
+    return http.post(`/article/${articleId}/upload`, data);
 }
 
 export default uploadArticleApi;

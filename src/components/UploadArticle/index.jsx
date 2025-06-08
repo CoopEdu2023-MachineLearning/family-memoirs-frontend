@@ -1,5 +1,5 @@
 import { Tag, Button, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
 import MainNarrator from './MainNarrator';
@@ -10,9 +10,22 @@ import Time from './Time';
 import TagBox from './TagBox';
 import AudioComponent from './Audio';
 
-import uploadArticleApi from '../../apis/uploadArticleApi';
+import { createArticleApi, uploadArticleApi } from '../../apis';
 
-function UploadArticle(articleId) {
+function UploadArticle() {
+
+    const [articleId, setArticleId] = useState(-1);
+
+    useEffect(() => {
+        createArticleApi()
+            .then(response => {
+                setArticleId(response.data.id);
+            })
+            .catch(error => {
+                message.error(`创建文章失败: ${error.message}`)
+                // setTimeout(() => window.location.reload(), 2000);
+            });
+    }, []);
 
     const [mainNarrator, setMainNarrator] = useState('');
     const [otherNarrators, setOtherNarrators] = useState([]);
@@ -50,7 +63,7 @@ function UploadArticle(articleId) {
 
         console.log(data)
 
-        uploadArticleApi(data)
+        uploadArticleApi(articleId, data)
             .then(() => {
                 message.success('上传成功！');
                 clearData();
