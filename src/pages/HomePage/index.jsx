@@ -1,22 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import DiagonalScrollAnimation from '@components/DiagonalScrollAnimation';
 import styles from './index.module.scss';
-import {Tags} from "@components/Tags/index.jsx";
+import { Tags } from "@components/Tags/index.jsx";
 import LoginComponents from "@components/LoginComponents/index.jsx";
 import SignUp from "@components/SignUp/index.jsx";
 import Header from "@components/Header/index.jsx";
+import { AutoCompleteSearch } from "@components/SearchBox";
+import { search } from '@apis';
 
 const HomePage = () => {
-  const [ filterTags, setFilterTags] = useState([]);
-  const [ homePageState, setHomePageState] = useState('homePage');
-  const [ isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const [filterTags, setFilterTags] = useState([]);
+  const [homePageState, setHomePageState] = useState('homePage');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [stories, setStories] = useState([]);
+  const [tellers, setTellers] = useState([]);;
+
+  const refine = useCallback(async (value) => {
+    const { stories, tellers } = await search(value, 15);
+    setStories(stories);
+    setTellers(tellers);
+  }, []);
+
   // 检查JWT token是否存在
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
-  
+
   // 处理登录/注册按钮点击
   const handleAuthButtonClick = () => {
     if (isLoggedIn) {
@@ -30,38 +41,42 @@ const HomePage = () => {
       console.log('login');
     }
   };
-  
+
   // 处理登录成功后的状态更新
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setHomePageState('homePage');
   };
-  
+
   return (
     <div className={styles.root}>
-      <Header 
+      <Header
         onAuthButtonClick={handleAuthButtonClick}
         isLoggedIn={isLoggedIn}
       />
-      
+
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+        <AutoCompleteSearch stories={stories} tellers={tellers} refine={refine} />
+      </div>
+
       {homePageState === 'homePage' &&
         <>
-          <DiagonalScrollAnimation filterTags={filterTags} className='body'/>
+          <DiagonalScrollAnimation filterTags={filterTags} className='body' />
           <div className="tags">
-            <Tags setFilterTags={setFilterTags}/>
+            <Tags setFilterTags={setFilterTags} />
           </div>
         </>
       }
 
-      {homePageState === 'login' && 
+      {homePageState === 'login' &&
         <LoginComponents
           onSwitchToSignup={() => setHomePageState('signup')}
           onClose={() => setHomePageState('homePage')}
           onLoginSuccess={handleLoginSuccess}
         />
       }
-      
-      {homePageState === 'signup' && 
+
+      {homePageState === 'signup' &&
         <SignUp
           onSwitchToLogin={() => setHomePageState('login')}
           onClose={() => setHomePageState('homePage')}

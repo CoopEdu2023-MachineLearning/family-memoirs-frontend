@@ -13,6 +13,8 @@ export default defineConfig({
       '@http': resolve(__dirname, './src/http'),
       '@apis': resolve(__dirname, './src/apis'),
       '@hooks': resolve(__dirname, './src/hooks'),
+      '@features': resolve(__dirname, './src/features'),
+      '@utils': resolve(__dirname, './src/utils'),
     },
   },
 })

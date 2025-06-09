@@ -10,3 +10,18 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
 }
+
+.title-body-color {
+  color: black;
+  opacity: 1;
+}
+
+.tag-timeline-color {
+  color: black;
+  opacity: 0.5;
+}
+
+.lowest-level-text-color {
+  color: black;
+  opacity: 0.2;
+}
