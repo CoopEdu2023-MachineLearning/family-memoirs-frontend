@@ -7,7 +7,6 @@ import OtherNarrators from './OtherNarrators';
 import Context from './Context';
 import Location from './Location';
 import Time from './Time';
-import TagBox from './TagBox';
 import AudioComponent from './Audio';
 
 import { createArticleApi, uploadArticleApi } from '../../apis';
@@ -27,8 +26,11 @@ function UploadArticle() {
             });
     }, []);
 
-    const [mainNarrator, setMainNarrator] = useState('');
-    const [otherNarrators, setOtherNarrators] = useState([]);
+    const [userId, setUserId] = useState(-1);
+    const [description, setDescription] = useState('');
+
+    const [mainNarratorId, setMainNarratorId] = useState('');
+    const [otherNarratorIds, setOtherNarratorIds] = useState([]);
     const [audioId, setAudioId] = useState(null);
     const [audioUrl, setAudioUrl] = useState('');
     const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
@@ -42,18 +44,28 @@ function UploadArticle() {
 
     const submit = () => {
 
-        const era = timeFilter.decade
-        const startYear = dayjs(timeFilter.dateRange[0]).format('YYYY')
-        const endYear = dayjs(timeFilter.dateRange[1]).format('YYYY')
-        const startMonth = dayjs(timeFilter.dateRange[0]).format('MM')
-        const endMonth = dayjs(timeFilter.dateRange[1]).format('MM')
+        const era = timeFilter.decade;
+
+        const startDate = timeFilter.dateRange && timeFilter.dateRange[0];
+        const endDate = timeFilter.dateRange && timeFilter.dateRange[1];
+
+        const startYear = startDate ? dayjs(startDate).format('YYYY') : '-1';
+        const endYear = endDate ? dayjs(endDate).format('YYYY') : '-1';
+        const startMonth = startDate ? dayjs(startDate).format('MM') : '-1';
+        const endMonth = endDate ? dayjs(endDate).format('MM') : '-1';
+
+        const tellerId = mainNarratorId
+        const otherTellerIds = otherNarratorIds.join(',')
+        const text = context
 
         const data = {
-            mainNarrator,
-            otherNarrators,
+            userId,
+            description,
+            tellerId,
+            otherTellerIds,
             audioId,
             location,
-            context,
+            text,
             era,
             startYear,
             endYear,
@@ -73,12 +85,18 @@ function UploadArticle() {
     };
 
     const clearData = () => {
+        setUserId('')
+        setMainNarratorId('')
+        setOtherNarratorIds([])
         setContext('')
         setLocation('')
-        setTime(null)
-        setMainNarrator('')
-        setOtherNarrators([])
-        setAudioList([])
+        setTimeFilter({
+            type: null,
+            decade: null,
+            dateRange: [null, null]
+        });
+        setAudioId(null)
+        setAudioUrl('')
     };
 
     return (
@@ -87,8 +105,8 @@ function UploadArticle() {
                 <Tag color="blue">主要讲述者</Tag>
                 <br />
                 <MainNarrator
-                    mainNarrator={mainNarrator}
-                    setMainNarrator={setMainNarrator}
+                    mainNarratorId={mainNarratorId}
+                    setMainNarratorId={setMainNarratorId}
                 />
             </div>
 
@@ -96,8 +114,8 @@ function UploadArticle() {
                 <Tag color="blue" style={{ margin: '10px 0' }}>其他讲述者</Tag>
                 <br />
                 <OtherNarrators
-                    otherNarrators={otherNarrators}
-                    setOtherNarrators={setOtherNarrators}
+                    otherNarratorIds={otherNarratorIds}
+                    setOtherNarratorIds={setOtherNarratorIds}
                 />
             </div>
 

@@ -1,7 +1,7 @@
 import http from "@http";
 
 const getNarratorListApi = () => {
-    return http.get(`/narrators/get`);
+    return http.post(`/teller/list`);
 }
 
 export default getNarratorListApi;

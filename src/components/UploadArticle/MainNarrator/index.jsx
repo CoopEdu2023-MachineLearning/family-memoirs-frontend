@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Select, message } from 'antd';
 import getNarratorListApi from '../../../apis/getNarratorListApi';
 
-function MainNarrator({ mainNarrator, setMainNarrator }) {
+function MainNarrator({ mainNarratorId, setMainNarratorId }) {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -11,8 +11,8 @@ function MainNarrator({ mainNarrator, setMainNarrator }) {
         getNarratorListApi()
             .then((data) => {
                 const formattedList = data.map((item) => ({
-                    value: item.id.toString(),
-                    label: item.name,
+                    label: item.nameOld,
+                    value: item.id,
                     ...item
                 }));
                 setList(formattedList);
@@ -25,13 +25,17 @@ function MainNarrator({ mainNarrator, setMainNarrator }) {
             });
     }, []);
 
-    const handleSelect = (value, option) => {
-        setMainNarrator(value);
+    const handleSelect = (selectedOption) => {
+        setMainNarratorId(selectedOption.value);
     };
 
     return (
         <Select
-            value={mainNarrator?.toString() || null}
+            labelInValue
+            value={{
+                value: mainNarratorId,
+                label: list.find(item => item.value === mainNarratorId)?.label || null
+            }}
             placeholder="选择主要的讲述者"
             style={{ width: 180, margin: '10px 0' }}
             onSelect={handleSelect}

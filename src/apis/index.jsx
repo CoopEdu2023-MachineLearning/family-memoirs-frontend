@@ -4,6 +4,8 @@ import resetPasswordApi from './resetPasswordApi';
 import getNarratorListApi from './getNarratorListApi';
 import uploadArticleApi from './uploadArticleApi';
 import createArticleApi from './createArticleApi';
+import findNarratorApi from './findNarratorApi';
+
 
 export {
   getEmailCodeApi,
@@ -12,4 +14,5 @@ export {
   resetPasswordApi,
   uploadArticleApi,
   createArticleApi,
+  findNarratorApi,
 }
