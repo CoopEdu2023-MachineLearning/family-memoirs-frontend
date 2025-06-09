@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Upload, Button, message, Space } from 'antd';
 import { SoundOutlined, CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import http from '../../../http';
+import config from '../../../config';
 
 function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId }) {
 
@@ -80,7 +81,7 @@ function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId 
                 onRemove={handleRemove}
                 onError={handleError}
                 showUploadList={false}
-                action={`/files/${articleId}/upload`}
+                action="http://localhost:8080/files/upload"
                 beforeUpload={() => {
                     setUploadingAudio(true);
                     return true;

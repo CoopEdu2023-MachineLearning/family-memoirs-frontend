@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { Typography } from 'antd';
 import ForgetPwdForm from './Form';
 import { verifyEmailCodeApi, resetPasswordApi } from '../../apis';
-import { message } from 'antd';
+import { message, Form } from 'antd';
 
 import styles from './index.module.scss';
 
@@ -20,8 +20,11 @@ function ForgetPwdModel() {
     const [emailCodeValue, setEmailCodeValue] = useState('');
 
     const formRef = useRef();
+    const [formKey, setFormKey] = useState(0);
+
 
     const showModal = () => {
+        setFormKey(prev => prev + 1)
         setOpen(true);
     };
 
@@ -53,6 +56,7 @@ function ForgetPwdModel() {
         setOpen(false);
     };
 
+
     return (
         <>
             <Link
@@ -79,6 +83,8 @@ function ForgetPwdModel() {
                 ]}
             >
                 <ForgetPwdForm
+                    clearOnDestroy={true}
+                    key={formKey}
                     ref={formRef}
                     emailValue={emailValue}
                     pwdValue={pwdValue}

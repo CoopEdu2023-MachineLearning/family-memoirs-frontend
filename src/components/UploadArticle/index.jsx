@@ -18,12 +18,12 @@ function UploadArticle() {
 
     useEffect(() => {
         createArticleApi()
-            .then(response => {
-                setArticleId(response.data.id);
+            .then(id => {
+                setArticleId(id);
             })
             .catch(error => {
                 message.error(`创建文章失败: ${error.message}`)
-                // setTimeout(() => window.location.reload(), 2000);
+                setTimeout(() => window.location.reload(), 2000);
             });
     }, []);
 
@@ -134,11 +134,11 @@ function UploadArticle() {
                 <Context context={context} setContext={setContext} />
             </div>
 
-            <div style={{ margin: '20px 0' }}>
+            {/* <div style={{ margin: '20px 0' }}>
                 <Tag color="blue" style={{ margin: '10px 0' }}>标签</Tag>
                 <br />
                 <TagBox />
-            </div>
+            </div> */}
 
             <Button
                 type="primary"
