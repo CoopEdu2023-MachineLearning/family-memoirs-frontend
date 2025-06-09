@@ -91,7 +91,6 @@ export default function VoiceComponents({ audioList }) {
 
     return (
         <div className={styles.container}>
-            {/* 音频选择与进度容器 */}
             <div className={styles.leftSection}>
                 <div ref={menuContainerRef}>
                     <div className={styles.title} onClick={() => setMenuOpen(o => !o)}>
@@ -118,7 +117,6 @@ export default function VoiceComponents({ audioList }) {
                     </ul>
                 )}
                 </div>
-                {/* 音频进度条和时间显示 */}
                 <div className={styles.progressBar}
                      onMouseDown={e => handleSeekStart(selected.id, selected.duration, e)}>
                     <div className={styles.progress} style={{width: `${percent}%`}}/>
@@ -128,7 +126,6 @@ export default function VoiceComponents({ audioList }) {
                     <span className={styles.total}>-{formatTime(selected.duration - currentTime)}</span>
                 </div>
             </div>
-            {/* 播放按钮单独容器 */}
             <div className={styles.rightSection}>
                 <button className={styles.playBtn} onClick={() => handlePlayPause(selected.id)}>
                     <span className={isPlaying ? styles.pauseIcon : styles.playIcon} />
