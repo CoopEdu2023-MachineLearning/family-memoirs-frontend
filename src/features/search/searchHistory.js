@@ -9,7 +9,7 @@ export function saveQuery(query) {
 }
 
 export function clearSearchHistory() {
-    localStorage.removeItem(HISTORY_KEY);
+  localStorage.removeItem(HISTORY_KEY);
 }
 
 export function getSearchHistory() {

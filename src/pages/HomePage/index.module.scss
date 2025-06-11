@@ -1,6 +1,6 @@
 .root {
   overflow-x: hidden;
-  
+
   :global {
     .tags {
       position: fixed;
@@ -15,5 +15,19 @@
       right: 60px;
       display: flex;
     }
+  }
+
+  .searchContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
   }
 }

@@ -14,7 +14,7 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [stories, setStories] = useState([]);
-  const [tellers, setTellers] = useState([]);;
+  const [tellers, setTellers] = useState([]);
 
   const refine = useCallback(async (value) => {
     const { stories, tellers } = await search(value, 15);
@@ -55,7 +55,7 @@ const HomePage = () => {
         isLoggedIn={isLoggedIn}
       />
 
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+      <div className={styles.searchContainer}>
         <AutoCompleteSearch stories={stories} tellers={tellers} refine={refine} />
       </div>
 

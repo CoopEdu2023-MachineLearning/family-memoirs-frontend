@@ -25,26 +25,27 @@ import { saveQuery } from "./searchHistory";
  * ```
  */
 export const useSearch = (refine, defaultValue) => {
-    const [inputValue, setInputValue] = useState(defaultValue);
-    const [debouncedInputValue] = useDebounce(inputValue, 500);
-    const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState(defaultValue);
+  const [debouncedInputValue] = useDebounce(inputValue, 500);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        refine(debouncedInputValue);
-    }, [debouncedInputValue, refine]);
+  useEffect(() => {
+    console.log("refined")
+    refine(debouncedInputValue);
+  }, [debouncedInputValue, refine]);
 
-    const handleSearch = (value) => {
-        saveQuery(value);
-        navigate(`/search?query=${encodeURIComponent(value)}`);
-    };
+  const handleSearch = (value) => {
+    saveQuery(value);
+    navigate(`/search?query=${encodeURIComponent(value)}`);
+  };
 
-    const handleChange = (value) => {
-        setInputValue(value);
-    };
+  const handleChange = (value) => {
+    setInputValue(value);
+  };
 
-    return {
-        inputValue,
-        handleChange,
-        handleSearch
-    };
+  return {
+    inputValue,
+    handleChange,
+    handleSearch
+  };
 };
