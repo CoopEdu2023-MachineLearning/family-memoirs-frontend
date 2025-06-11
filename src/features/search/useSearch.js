@@ -30,7 +30,6 @@ export const useSearch = (refine, defaultValue) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("refined")
     refine(debouncedInputValue);
   }, [debouncedInputValue, refine]);
 

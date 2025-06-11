@@ -136,14 +136,9 @@ const SuggestionPanel = ({ stories, tellers, inputValue, onSelect, onStorySelect
   );
 };
 
-let lastRefine = null;
-
 export const AutoCompleteSearch = ({ stories, tellers, refine }) => {
   const { inputValue, handleChange, handleSearch } = useSearch(refine, "");
   const navigate = useNavigate();
-
-  console.log(lastRefine === refine, lastRefine, refine);
-  lastRefine = refine;
 
   return (
     <AutoComplete
