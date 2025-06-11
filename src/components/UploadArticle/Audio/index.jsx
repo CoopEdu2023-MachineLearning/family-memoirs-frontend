@@ -1,52 +1,109 @@
 import React, { useState } from 'react';
-import { Upload, Button, message, Space } from 'antd';
+import { Upload, Button, message, Space, Progress } from 'antd';
 import { SoundOutlined, CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import http from '../../../http';
-import config from '../../../config';
+import { uploadFileApi } from '../../../apis';
 
 function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId }) {
-
     const [uploadingAudio, setUploadingAudio] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
-    const handleOnChange = ({ file }) => {
+    const handleOnChange = (info) => {
+        const { file } = info;
+
         if (file.status === 'uploading') {
             setUploadingAudio(true);
-        } else if (file.status === 'done') {
+            setUploadProgress(file.percent || 0);
+            return;
+        }
+
+        if (file.status === 'done') {
             setUploadingAudio(false);
-            setAudioId(file.response.id);
-            setAudioUrl(file.response.url);
-        } else if (file.status === 'error' || file.error) {
+            setUploadProgress(0);
+
+            if (file.response && file.response.id && file.response.url) {
+                setAudioId(file.response.id);
+                setAudioUrl(file.response.url);
+                message.success('上传成功');
+            } else {
+                message.error('上传成功，但返回数据不完整');
+                console.error('上传响应数据不完整:', file.response);
+            }
+            return;
+        }
+
+        if (file.status === 'error') {
             setUploadingAudio(false);
-            message.error('上传失败');
+            setUploadProgress(0);
+            const errorMsg = file.error?.message || file.response?.message || '上传失败';
+            message.error(errorMsg);
+            console.error('上传错误:', file.error || file.response);
         }
     };
 
     const handleError = (error) => {
         setUploadingAudio(false);
-        message.error(`上传失败: ${error.message || '未知错误'}`);
+        setUploadProgress(0);
+        const errorMsg = error.message || '上传失败';
+        message.error(errorMsg);
+        console.error('上传错误:', error);
     };
 
-    const handleRemove = () => {
+    const handleRemove = async () => {
         if (uploadingAudio) {
             message.warning('文件正在上传中，无法删除');
             return false;
         }
 
-        if (audioId) {
-            return http.delete(`/files/${audioId}`)
-                .then(() => {
-                    setAudioId(null);
-                    setAudioUrl(null);
-                    return true;
-                })
-                .catch(error => {
-                    message.error(`删除失败：${error.message}`);
-                    return false;
-                });
-        } else {
+        if (!audioId) {
             setAudioId(null);
             setAudioUrl(null);
             return true;
+        }
+
+        try {
+            await http.delete(`/files/${audioId}`);
+            setAudioId(null);
+            setAudioUrl(null);
+            message.success('删除成功');
+            return true;
+        } catch (error) {
+            message.error(`删除失败：${error.message}`);
+            console.error('删除错误:', error);
+            return false;
+        }
+    };
+
+    const customRequest = async ({ file, onProgress, onSuccess, onError }) => {
+        setUploadingAudio(true);
+
+        try {
+            const response = await uploadFileApi(file, {
+                onUploadProgress: (progressEvent) => {
+                    const percent = Math.min(99, Math.round(
+                        (progressEvent.loaded * 100) / progressEvent.total
+                    ));
+                    onProgress({ percent });
+                    setUploadProgress(percent);
+                }
+            });
+
+            // 确保上传完成状态
+            onProgress({ percent: 100 });
+            setUploadProgress(100);
+
+            // 必须包含 status: 'done'
+            onSuccess({
+                ...response.data,
+                status: 'done'
+            }, file);
+
+        } catch (error) {
+            onProgress({ percent: 0 });
+            setUploadProgress(0);
+            onError(error);
+        } finally {
+            setUploadingAudio(false);
         }
     };
 
@@ -69,6 +126,12 @@ function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId 
                 </div>
             )}
 
+            {uploadingAudio && (
+                <div style={{ marginBottom: 16 }}>
+                    <Progress percent={uploadProgress} status="active" />
+                </div>
+            )}
+
             <Upload
                 accept="audio/*"
                 fileList={audioId ? [{
@@ -81,17 +144,13 @@ function AudioComponent({ audioId, setAudioId, audioUrl, setAudioUrl, articleId 
                 onRemove={handleRemove}
                 onError={handleError}
                 showUploadList={false}
-                action="http://localhost:8080/files/upload"
-                beforeUpload={() => {
-                    setUploadingAudio(true);
-                    return true;
-                }}
+                customRequest={customRequest}
             >
                 <Button
                     icon={<UploadOutlined />}
                     disabled={uploadingAudio}
                 >
-                    {uploadingAudio ? '上传中...' : '上传音频（最大 100MB）'}
+                    {uploadingAudio ? `上传中... ${uploadProgress}%` : '上传音频（最大 100MB）'}
                 </Button>
             </Upload>
         </>

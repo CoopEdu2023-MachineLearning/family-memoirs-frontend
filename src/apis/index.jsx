@@ -5,6 +5,7 @@ import getNarratorListApi from './getNarratorListApi';
 import uploadArticleApi from './uploadArticleApi';
 import createArticleApi from './createArticleApi';
 import findNarratorApi from './findNarratorApi';
+import uploadFileApi from './uploadFileApi';
 
 
 export {
@@ -15,4 +16,5 @@ export {
   uploadArticleApi,
   createArticleApi,
   findNarratorApi,
+  uploadFileApi,
 }
