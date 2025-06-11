@@ -9,6 +9,10 @@ const http = axios.create({
   baseURL: baseURL,
 });
 
+export const getArticleById = (id) => {
+  return http.get(`/article/${id}`);
+};
+
 requestInterceptor(http);
 responseInterceptor(http);
 

@@ -1,0 +1,13 @@
+.details {
+  color: rgb(179, 179, 179);
+  font-family: 'FZKai-Z03', serif;
+
+  &__uploader {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  &__name {
+    text-decoration: underline;
+    color: #000000
+  }
+}

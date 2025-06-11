@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "antd";
 import { demoApi } from "@apis";
 import { Card } from "@components/CardComponent";
+import VoicePlayer from "@components/ArticleComponents/VoicePlayer/index.jsx";
 
 export const DemoPage = ({ name }) => {
   const [text, setText] = useState('');

@@ -1,0 +1,14 @@
+.details {
+  color: rgb(179, 179, 179);
+  font-family: "FZKai-Z03", serif;
+}
+.details__uploader {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.details__name {
+  text-decoration: underline;
+  color: #000000;
+}
+
+/*# sourceMappingURL=index.module.css.map */
