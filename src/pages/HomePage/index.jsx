@@ -6,7 +6,7 @@ import LoginComponents from "@components/LoginComponents/index.jsx";
 import SignUp from "@components/SignUp/index.jsx";
 import Header from "@components/Header/index.jsx";
 import { AutoCompleteSearch } from "@components/SearchBox";
-import { search } from '@apis';
+import { searchApi } from '@apis';
 
 const HomePage = () => {
   const [filterTags, setFilterTags] = useState([]);
@@ -17,7 +17,7 @@ const HomePage = () => {
   const [tellers, setTellers] = useState([]);
 
   const refine = useCallback(async (value) => {
-    const { stories, tellers } = await search(value, 15);
+    const { stories, tellers } = await searchApi(value, 15);
     setStories(stories);
     setTellers(tellers);
   }, []);

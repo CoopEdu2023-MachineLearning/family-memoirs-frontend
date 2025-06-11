@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useLocation } from "react-router";
 import { Checkbox, Col, Input, Row, Space, Tabs } from "antd";
 import { highlightTeller, highlightStory, highlightUser, noHighlightStory } from "@features/search/searchUtils";
-import { search } from "@apis";
+import { searchApi } from "@apis";
 import { useSearch } from "@features/search/useSearch";
 import InterviewCard from "@components/Waterfallcard";
 
@@ -47,7 +47,7 @@ export const SearchResultsPage = () => {
   const [activeTab, setActiveTab] = useState("1");
 
   const refine = useCallback(async (value) => {
-    const { stories, tellers, users } = await search(value, undefined, preciseSearch);
+    const { stories, tellers, users } = await searchApi(value, undefined, preciseSearch);
     setCurrentQuery(value);
     setStories(stories);
     setTellers(tellers);

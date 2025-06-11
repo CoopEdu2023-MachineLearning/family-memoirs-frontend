@@ -8,7 +8,7 @@ import findNarratorApi from './findNarratorApi';
 import uploadFileApi from './uploadFileApi';
 import getArticles from './waterfalApi';
 import signUpApi from './signUpApi';
-
+import searchApi from './searchApi';
 
 export {
   getEmailCodeApi,
@@ -19,6 +19,7 @@ export {
   createArticleApi,
   findNarratorApi,
   uploadFileApi,
+  searchApi,
   getArticles,
   signUpApi,
 }
