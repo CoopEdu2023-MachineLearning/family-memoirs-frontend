@@ -1,6 +1,6 @@
-import http from "@http/index.js";
+import http from "@http";
 
-export const signup = (email, username, password, invitationCode, verificationCode) => {
+const signUpApi = (email, username, password, invitationCode, verificationCode) => {
     return http.post('/users/signup', {
         email,
         username,
@@ -9,3 +9,6 @@ export const signup = (email, username, password, invitationCode, verificationCo
         verificationCode
     });
 }
+
+export default signUpApi;
+

@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import { Typography } from 'antd';
 import ForgetPwdForm from './Form';
 import { verifyEmailCodeApi, resetPasswordApi } from '../../apis';
-import { message, Form } from 'antd';
+import { message } from 'antd';
 
 import styles from './index.module.scss';
 

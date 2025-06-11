@@ -17,11 +17,11 @@ const WaterfallItem = ({ item }) => {
     <div key={item.id} className={styles.waterfallItem} ref={ref}>
       <InterviewCard
         avatar={item.avatar}
-        start = {item.startYear}
-        end = {item.endYear}
-        teller = {item.teller}
+        start={item.startYear}
+        end={item.endYear}
+        teller={item.teller}
         description={item.text}
-        location = {item.location}
+        location={item.location}
         tags={item.tags.name}
       />
     </div>
@@ -34,7 +34,7 @@ const WaterfallPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -65,7 +65,7 @@ const WaterfallPage = () => {
   };
 
   const itemRender = (item) => <WaterfallItem key={item.id} item={item} />;
-  
+
   return (
     // 直接使用div容器，不再嵌套antd的Layout
     <div className={styles.waterfallContainer}>

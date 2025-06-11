@@ -6,6 +6,8 @@ import uploadArticleApi from './uploadArticleApi';
 import createArticleApi from './createArticleApi';
 import findNarratorApi from './findNarratorApi';
 import uploadFileApi from './uploadFileApi';
+import getArticles from './waterfalApi';
+import signUpApi from './signUpApi';
 
 
 export {
@@ -17,4 +19,6 @@ export {
   createArticleApi,
   findNarratorApi,
   uploadFileApi,
+  getArticles,
+  signUpApi,
 }
