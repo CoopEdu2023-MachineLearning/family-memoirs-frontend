@@ -1,0 +1,78 @@
+.root {
+  :global {
+    .modal-content {
+      display: flex;
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    .content-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .space {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .select {
+      width: 110%;
+    }
+
+    .right {
+      flex: 0 0 150px;
+      text-align: center;
+
+      .avatar-uploader {
+        .ant-upload.ant-upload-select {
+          width: 225px !important;
+          height: 425px !important;
+          border-radius: 8px;
+        }
+      }
+
+      .avatar-reminder {
+        color: lightblue;
+        margin-top: 8px;
+        font-size: 14px;
+      }
+    }
+
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .word {
+      width: 80px;
+      margin-right: 8px;
+      text-align: left; /* 改为左对齐，确保每行第一个字符对齐 */
+      font-size: 14px;
+    }
+
+    .unit {
+      width: 30px;
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    .ant-input, .ant-input-textarea {
+      width: 200px;
+    }
+
+    .birthdate-space {
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .input{
+      width: 100%;
+    }
+  }
+}

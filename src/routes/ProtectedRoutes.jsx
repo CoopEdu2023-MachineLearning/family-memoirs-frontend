@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 export const PrivateProtectedRoute = () => {
@@ -6,7 +6,7 @@ export const PrivateProtectedRoute = () => {
   return (
     isAuthenticated
       ? <Outlet />
-      : <Navigate to="/login" replace />
+      : <Navigate to="/home" replace /> // 重定向到home页面而不是login页面
   );
 };
 

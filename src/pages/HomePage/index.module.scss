@@ -1,0 +1,19 @@
+.root {
+  overflow-x: hidden;
+  
+  :global {
+    .tags {
+      position: fixed;
+      bottom: 60px;
+      right: 60px;
+    }
+
+    .loginWindow {
+      position: fixed;
+      z-index: 100;
+      top: 40px;
+      right: 60px;
+      display: flex;
+    }
+  }
+}

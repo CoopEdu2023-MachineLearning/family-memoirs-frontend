@@ -1,0 +1,39 @@
+.root {
+
+  :global {
+    .tags {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      gap: 10px;
+    }
+    .tags1 {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+
+    }
+    .tags2 {
+      display: flex;
+      justify-content: end;
+
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 200px; /* 设定一个固定宽度，例如 300px */
+    }
+    .tag {
+      padding: 10px 20px;
+      border: 0.5px solid var(----, rgba(0, 0, 0, 0.10));
+      border-radius: 999px;
+
+    }
+    .tagActive{
+      padding: 10px 20px;
+      color: #f0f0f0;
+      border: 0.5px solid var(----, rgba(0, 0, 0, 0.10));
+      border-radius: 999px;
+      background: var(----, rgba(0, 0, 0, 0.90));
+    }
+  }
+}
