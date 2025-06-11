@@ -4,7 +4,7 @@ import styles from './index.module.scss';
 const Header = ({ onAuthButtonClick, isLoggedIn }) => {
   return (
     <div className={styles.header}>
-      <img src='../../../public/logo.svg' alt="logo" className={styles.logo}/>
+      <img src='/logo.svg' alt="logo" className={styles.logo}/>
       <img src=''/>
       <div className={styles.topBar}>
         <div>购买实体专辑</div>

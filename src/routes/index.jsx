@@ -5,6 +5,7 @@ import UploadArticlePage from '../pages/UploadArticlePage';
 import Layout from '@components/Layout/index.jsx';
 import HomePage from "@pages/HomePage";
 import WaterfallPage from "@pages/WaterfallPage/index.jsx";
+import { SearchResultsPage } from "@pages/SearchResultsPage";
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
       {
         path: '/homeWaterfall',
         element: <WaterfallPage />
+      },
+      {
+        path: '/search',
+        element: <SearchResultsPage />
       }
     ]
   },

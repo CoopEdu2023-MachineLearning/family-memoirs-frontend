@@ -8,6 +8,7 @@
   top: 40px;
   padding: 20px 60px;
   box-sizing: border-box;
+  pointer-events: none;
 }
 
 .logo {
@@ -28,6 +29,7 @@
 
 .topBar > div {
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .topBar > div:hover {
