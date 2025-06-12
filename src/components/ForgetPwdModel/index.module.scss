@@ -58,21 +58,19 @@
 
     .send-code-btn {
         border-radius: 999px;
-        display: flex;
-        width: 8.2vw;
+        display: inline-flex;
         height: 42px;
-        padding: 6px 16px;
+        padding: 6px 20px;
         justify-content: center;
         align-items: center;
         gap: 10px;
-        flex-shrink: 0;
-        color: rgba(255, 255, 255, 1);
-        text-align: right;
-        font-family: "PingFang SC";
+        color: #fff;
+        font-family: "PingFang SC", sans-serif;
         font-size: 14px;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
+        background-color: #000;
+        border: none;
+        cursor: pointer;
     }
 
     .confirm-btn {

@@ -65,8 +65,9 @@ function ForgetPwdModel() {
                         variant="solid"
                         key="submit"
                         onClick={handleOk}
+                        autoInsertSpaceInButton={false}
                     >
-                        继续
+                        <span style={{ letterSpacing: 0 }}>{'继'}{'续'}</span>
                     </Button>
                 ]}
             >
