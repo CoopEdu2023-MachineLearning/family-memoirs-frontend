@@ -4,7 +4,7 @@ import styles from './index.module.scss';
 import { Tags } from "@components/Tags/index.jsx";
 import LoginComponents from "@components/LoginComponents/index.jsx";
 import SignUp from "@components/SignUp/index.jsx";
-import Header from "@components/Header/index.jsx";
+// 移除 Header 的导入
 import { AutoCompleteSearch } from "@components/SearchBox";
 import { searchApi } from '@apis';
 import ForgetPwdModel from "@components/ForgetPwdModel/index.jsx";
@@ -12,7 +12,7 @@ import ForgetPwdModel from "@components/ForgetPwdModel/index.jsx";
 const HomePage = () => {
   const [filterTags, setFilterTags] = useState([]);
   const [homePageState, setHomePageState] = useState('homePage');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 移除 isLoggedIn 状态管理，因为Layout已经处理了
 
   const [stories, setStories] = useState([]);
   const [tellers, setTellers] = useState([]);
@@ -23,38 +23,13 @@ const HomePage = () => {
     setTellers(tellers);
   }, []);
 
-  // 检查JWT token是否存在
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+  // 移除 JWT token 检查的 useEffect
 
-  // 处理登录/注册按钮点击
-  const handleAuthButtonClick = () => {
-    if (isLoggedIn) {
-      // 如果已登录，可以跳转到个人中心或显示用户菜单
-      setHomePageState('me');
-      console.log('跳转到个人中心');
-      // 这里可以添加跳转逻辑或显示用户菜单
-    } else {
-      // 如果未登录，显示登录弹窗
-      setHomePageState('login');
-      console.log('login');
-    }
-  };
-
-  // 处理登录成功后的状态更新
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    setHomePageState('homePage');
-  };
+  // 移除 handleAuthButtonClick 和 handleLoginSuccess 函数
 
   return (
     <div className={styles.root}>
-      <Header
-        onAuthButtonClick={handleAuthButtonClick}
-        isLoggedIn={isLoggedIn}
-      />
+      {/* 移除 Header 组件 */}
 
       <div className={styles.searchContainer}>
         <AutoCompleteSearch stories={stories} tellers={tellers} refine={refine} />
@@ -74,7 +49,7 @@ const HomePage = () => {
           onSwitchToSignup={() => setHomePageState('signup')}
           onSwitchToForgetPassword={() => setHomePageState('forgetPassword')}
           onClose={() => setHomePageState('homePage')}
-          onLoginSuccess={handleLoginSuccess}
+          // 移除 onLoginSuccess，因为Layout会处理
         />
       }
 
