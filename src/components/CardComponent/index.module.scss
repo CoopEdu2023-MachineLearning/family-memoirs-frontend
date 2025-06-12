@@ -7,14 +7,13 @@
   align-items: center;
   font-size: 36px;
   position: relative;
-  font-family: "FZKai-Z03 Regular", serif;
+  font-family: FZKai-Z03, serif;
   perspective: 1000px;
   transform: rotate3d(0, 0, 0, 0deg);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
 
   .topText {
-    font-family: "FZKai-Z03 Regular", serif;
     color: rgba(255, 255, 255, 0.30);
     font-size: 36px;
     font-style: normal;
