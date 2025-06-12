@@ -28,8 +28,23 @@
 
 .topBar > div {
   cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: fit-content;
+  white-space: nowrap;
 }
 
 .topBar > div:hover {
   color: rgba(0, 0, 0, 0.8);
+}
+
+/* 我的页面特殊样式 */
+.myPageHeader {
+  align-items: center;
+  top: 20px;
+  padding: 15px 60px;
+}
+
+.smallLogo {
+  width: 60px;
+  height: 43px;
 }

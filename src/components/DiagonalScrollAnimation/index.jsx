@@ -139,8 +139,8 @@ const DiagonalScrollAnimation = ({ filterTags = [] }) => {
         ScrollTrigger.getAll().forEach(st => st.kill());
         
         // 设置元素间距
-        const spacingX = 60; // 水平间距
-        const spacingY = 15;  // 垂直间距 - 设置为水平间距的1/4
+        const spacingX = 40; // 水平间距
+        const spacingY = 10;  // 垂直间距 - 设置为水平间距的1/4
         const skewAngle = 20; // 倾斜角度，负值使右边低左边高
 
         const baseHeight = window.innerHeight; // 基础高度至少为一个屏幕高度
@@ -226,10 +226,10 @@ const DiagonalScrollAnimation = ({ filterTags = [] }) => {
                     const currentY = startY + (endY - startY) * scrollProgress;
                     elementData.current[index].currentY = currentY;
                     gsap.to(item, {
-                        y: currentY - 100,
+                        y: currentY - 140,
                         skewY: skewAngle,
                         duration: 0.3,
-                        ease: 'power1.inOut'
+                        ease: "cubic-bezier(0.28, 0.01, 0.27, 1)"
                     });
                 };
                 const mouseLeaveHandler = () => {
@@ -243,7 +243,7 @@ const DiagonalScrollAnimation = ({ filterTags = [] }) => {
                         y: currentY,
                         skewY: skewAngle,
                         duration: 0.3,
-                        ease: 'power1.inOut'
+                        ease: "cubic-bezier(0.28, 0.01, 0.27, 1)"
                     });
                 };
                 item.addEventListener('mouseenter', mouseEnterHandler);

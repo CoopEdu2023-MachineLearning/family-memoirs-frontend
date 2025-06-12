@@ -3,6 +3,7 @@ import Layout from '@components/Layout/index.jsx';
 import HomePage from "@pages/HomePage";
 import TellerCreation from "@components/TellerCreation/index.jsx";
 import WaterfallPage from "@pages/WaterfallPage/index.jsx";
+import MyPage from "@pages/MyPage/index.jsx";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
       {
         path: '/homeWaterfall',
         element: <WaterfallPage />
+      },
+      {
+        path: '/my',
+        element: <MyPage />
       }
     ]
   },

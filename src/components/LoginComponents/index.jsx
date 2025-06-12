@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import http from "@http";
 import { CloseOutlined } from '@ant-design/icons';
 
-const LoginComponents = ({ onSwitchToSignup, onClose }) => {
+const LoginComponents = ({ onSwitchToSignup, onClose, onLoginSuccess }) => {
   const { Title, Link, Text } = Typography;
   const [ isAllowed, setIsAllowed ] = React.useState(false);
   const [ email, setEmail ] = React.useState('');
@@ -36,12 +36,18 @@ const LoginComponents = ({ onSwitchToSignup, onClose }) => {
       });
       localStorage.setItem('token', token);
       message.success('登录成功');
-      // 在handleLogin函数的成功处理中添加：
+      
+      // 调用登录成功回调
       if (onLoginSuccess) {
         onLoginSuccess();
       }
-      onClose(); // 添加这行来关闭弹窗
-      navigate('/home');
+      
+      // 关闭弹窗
+      onClose();
+      
+      // 移除这行导航，因为已经在/home页面了
+      // navigate('/home');
+      
     } catch (error) {
       message.error(error.message || '登录失败，请稍后重试');
       console.error('登录失败:', error);
