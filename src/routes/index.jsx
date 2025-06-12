@@ -6,6 +6,7 @@ import Layout from '@components/Layout/index.jsx';
 import HomePage from "@pages/HomePage";
 import WaterfallPage from "@pages/WaterfallPage/index.jsx";
 import { SearchResultsPage } from "@pages/SearchResultsPage";
+import ArticlePage from "@pages/ArticlePage/index.jsx";
 
 const routes = [
   {
@@ -27,6 +28,10 @@ const routes = [
       {
         path: '/search',
         element: <SearchResultsPage />
+      },
+      {
+        path: '/article/:id',
+        element: <ArticlePage />
       }
     ]
   },

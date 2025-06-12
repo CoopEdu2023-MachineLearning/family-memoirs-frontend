@@ -1,0 +1,30 @@
+.root {
+  overflow-x: hidden;
+}
+.root :global .tags {
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+}
+.root :global .loginWindow {
+  position: fixed;
+  z-index: 100;
+  top: 40px;
+  right: 60px;
+  display: flex;
+}
+.root .searchContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/*# sourceMappingURL=index.module.css.map */

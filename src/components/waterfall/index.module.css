@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.root :global .masonryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 自动填充的列数，每列的最小宽度为250px */
+  grid-gap: 20px; /* 列与列之间的间距 */
+}
+.root :global .masonryColumn {
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 1 0 21%; /* Make sure there's enough room for multiple columns */
+  box-sizing: border-box;
+}
+.root :global .item {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=index.module.css.map */

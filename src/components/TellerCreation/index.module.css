@@ -1,0 +1,63 @@
+@charset "UTF-8";
+.root :global .modal-content {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+}
+.root :global .content-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+}
+.root :global .space {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.root :global .select {
+  width: 110%;
+}
+.root :global .right {
+  flex: 0 0 150px;
+  text-align: center;
+}
+.root :global .right .avatar-uploader .ant-upload.ant-upload-select {
+  width: 225px !important;
+  height: 425px !important;
+  border-radius: 8px;
+}
+.root :global .right .avatar-reminder {
+  color: lightblue;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.root :global .left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.root :global .word {
+  width: 80px;
+  margin-right: 8px;
+  text-align: left; /* 改为左对齐，确保每行第一个字符对齐 */
+  font-size: 14px;
+}
+.root :global .unit {
+  width: 30px;
+  margin-right: 8px;
+  font-size: 14px;
+}
+.root :global .ant-input, .root :global .ant-input-textarea {
+  width: 200px;
+}
+.root :global .birthdate-space {
+  align-items: center;
+  white-space: nowrap;
+}
+.root :global .input {
+  width: 100%;
+}
+
+/*# sourceMappingURL=index.module.css.map */
