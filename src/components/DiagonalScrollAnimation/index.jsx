@@ -286,9 +286,10 @@ const DiagonalScrollAnimation = ({ filterTags = [] }) => {
                   <div className={`box ${hasFilterCondition ? (isMatched ? 'matched' : 'dimmed') : ''}`}>
                     <Card
                       className="item"
-                      location={item.location}
-                      tag1={item.tags && item.tags.length > 0 ? item.tags[0].name : ''}
-                      tag2={item.tags && item.tags.length > 1 ? item.tags[1].name : ''}
+                      place={item.location}
+                      tagOne={item.tags && item.tags.length > 0 ? item.tags[0].name : ''}
+                      tagTwo={item.tags && item.tags.length > 1 ? item.tags[1].name : ''}
+                      eventTag={item.tags && item.tags.length > 2 ? item.tags[2].name : ''}
                     />
                     <div className="time">
                       <div className='timeText'>{item.timeDisplay}</div>
