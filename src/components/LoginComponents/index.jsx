@@ -1,17 +1,17 @@
 import React from 'react';
-import {Button, Input, message, Checkbox} from 'antd';
+import { Button, Input, message, Checkbox } from 'antd';
 import styles from './index.module.scss';
 import { Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import http from "@http";
 import { CloseOutlined } from '@ant-design/icons';
 
-const LoginComponents = ({ onSwitchToSignup, onClose }) => {
+const LoginComponents = ({ onSwitchToSignup, onSwitchToForgetPassword, onClose }) => {
   const { Title, Link, Text } = Typography;
-  const [ isAllowed, setIsAllowed ] = React.useState(false);
-  const [ email, setEmail ] = React.useState('');
-  const [ password, setPassword ] = React.useState('');
-  const [ loading, setLoading ] = React.useState(false);
+  const [isAllowed, setIsAllowed] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -27,7 +27,7 @@ const LoginComponents = ({ onSwitchToSignup, onClose }) => {
       message.error('请输入邮箱和密码');
       return;
     }
-    
+
     setLoading(true);
     try {
       const token = await http.post('/users/login', {
@@ -53,45 +53,45 @@ const LoginComponents = ({ onSwitchToSignup, onClose }) => {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        <Button 
+        <Button
           className={styles.closeButton}
-          type="text" 
-          icon={<CloseOutlined />} 
+          type="text"
+          icon={<CloseOutlined />}
           onClick={onClose}
         />
         <h1 className={styles.title}>登录「家书万金」</h1>
-        
+
         <div className={styles.inputGroup}>
           <p className={styles.label}>邮箱</p>
-          <Input 
+          <Input
             className={styles.input}
-            placeholder="输入邮箱" 
+            placeholder="输入邮箱"
             value={email}
-            onChange={handleEmailChange} 
+            onChange={handleEmailChange}
           />
           <div className={styles.passwordGroup}>
             <Text className={styles.label}>密码</Text>
-            <Text className={styles.forgotPassword} onClick={()=>{navigate('/forget')}}>忘记密码</Text>
+            <Text className={styles.forgotPassword} onClick={() => { onSwitchToForgetPassword() }}>忘记密码</Text>
           </div>
 
-          <Input.Password 
+          <Input.Password
             className={styles.input}
-            placeholder="输入密码" 
+            placeholder="输入密码"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        
 
-        <Button 
+
+        <Button
           className={styles.loginButton}
-          onClick={handleLogin} 
+          onClick={handleLogin}
           disabled={!isAllowed}
           loading={loading}
         >
           登录
         </Button>
-        
+
         <div className={styles.footer}>
           <div className={styles.leftFooter}>
             <Text>没有账号？</Text>

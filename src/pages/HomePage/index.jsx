@@ -7,6 +7,7 @@ import SignUp from "@components/SignUp/index.jsx";
 import Header from "@components/Header/index.jsx";
 import { AutoCompleteSearch } from "@components/SearchBox";
 import { searchApi } from '@apis';
+import ForgetPwdModel from "@components/ForgetPwdModel/index.jsx";
 
 const HomePage = () => {
   const [filterTags, setFilterTags] = useState([]);
@@ -71,6 +72,7 @@ const HomePage = () => {
       {homePageState === 'login' &&
         <LoginComponents
           onSwitchToSignup={() => setHomePageState('signup')}
+          onSwitchToForgetPassword={() => setHomePageState('forgetPassword')}
           onClose={() => setHomePageState('homePage')}
           onLoginSuccess={handleLoginSuccess}
         />
@@ -79,6 +81,12 @@ const HomePage = () => {
       {homePageState === 'signup' &&
         <SignUp
           onSwitchToLogin={() => setHomePageState('login')}
+          onClose={() => setHomePageState('homePage')}
+        />
+      }
+
+      {homePageState === 'forgetPassword' &&
+        <ForgetPwdModel
           onClose={() => setHomePageState('homePage')}
         />
       }

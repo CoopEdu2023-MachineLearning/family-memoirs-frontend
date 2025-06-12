@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'antd';
-import { Typography } from 'antd';
 import ForgetPwdForm from './Form';
 import { verifyEmailCodeApi, resetPasswordApi } from '../../apis';
 import { message } from 'antd';
@@ -9,9 +8,7 @@ import styles from './index.module.scss';
 
 function ForgetPwdModel() {
 
-    const { Link } = Typography
-
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const [pwdValue, setPwdValue] = useState('');
@@ -21,12 +18,6 @@ function ForgetPwdModel() {
 
     const formRef = useRef();
     const [formKey, setFormKey] = useState(0);
-
-
-    const showModal = () => {
-        setFormKey(prev => prev + 1)
-        setOpen(true);
-    };
 
     function handleOk() {
         formRef.current.validateForm()
@@ -53,16 +44,13 @@ function ForgetPwdModel() {
     }
 
     const handleCancel = () => {
+        setFormKey(prev => prev + 1)
         setOpen(false);
     };
 
 
     return (
         <>
-            <Link
-                onClick={showModal}>
-                忘记密码
-            </Link>
             <Modal
                 centered
                 className={styles.modal}
