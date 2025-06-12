@@ -3,7 +3,7 @@
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px 0 40px;
+  padding: 40px 40px 0 40px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -18,8 +18,7 @@
   width: 100%;
   font-size: 14px;
   line-height: 150%;
-  gap: 24px;
-  padding: 24px;
+  gap: 40px;
 }
 .root .articleSidebar {
   flex: 0 0 400px;

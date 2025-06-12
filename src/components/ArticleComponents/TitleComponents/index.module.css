@@ -1,11 +1,11 @@
 .titleContainer {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   font-family: FZKai-Z03, serif;
 }
 .titleContainer .metaInfo {
   display: flex;
   justify-content: space-between;
-  font-size: 48px;
+  font-size: 50px;
   font-weight: bold;
   padding: 1rem 1rem 1rem 0;
   background-color: #FFFFFF;

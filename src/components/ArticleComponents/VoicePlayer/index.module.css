@@ -3,26 +3,24 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 8px 0;
-  margin-top: 16px;
+  margin: 40px 0;
 }
 
 .leftSection {
   flex: 1;
-  display: flex;
   flex-direction: column;
+  height: 44px;
   gap: 6px;
-  padding: 1.5px 30px;
+  padding: 0 20px;
   border: 1px solid #d9d9d9;
   background-color: #fff;
   border-radius: 999px;
 }
 
 .title {
-  font-size: 14px;
+  font-size: 10px;
   color: #333;
   cursor: pointer;
-  display: inline-flex;
   align-items: center;
   transition: color 0.2s ease;
 }
@@ -32,7 +30,7 @@
 
 .arrow {
   margin-left: 4px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .menu {
@@ -80,7 +78,7 @@
 .timeRow {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 10px;
   color: #666;
 }
 
@@ -96,16 +94,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 16px;
+  margin-left: 20px;
 }
 
 .playBtn {
   background-color: #fff;
   border: 1px solid #d9d9d9;
-  width: 63px;
-  height: 63px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,8 +121,8 @@
 
 .playIcon,
 .pauseIcon {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   background-size: contain;
   background-repeat: no-repeat;
 }
