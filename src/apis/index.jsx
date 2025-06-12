@@ -9,6 +9,8 @@ import uploadFileApi from './uploadFileApi';
 import getArticles from './waterfalApi';
 import signUpApi from './signUpApi';
 import searchApi from './searchApi';
+import { getUserInfo } from './userApi';
+import { getTellerInfo, getTellerArticles } from './tellerApi';
 
 export {
   getEmailCodeApi,
@@ -22,4 +24,7 @@ export {
   searchApi,
   getArticles,
   signUpApi,
+  getUserInfo,
+  getTellerInfo,
+  getTellerArticles,
 }
