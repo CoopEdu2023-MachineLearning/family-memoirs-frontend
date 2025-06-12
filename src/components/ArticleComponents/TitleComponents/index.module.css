@@ -2,11 +2,13 @@
   margin-bottom: 10px;
   font-family: FZKai-Z03, serif;
 }
+.titleContainer .digits {
+  font-family: Agaramo, serif;
+}
 .titleContainer .metaInfo {
   display: flex;
   justify-content: space-between;
-  font-size: 50px;
-  font-weight: bold;
+  font-size: 45px;
   padding: 1rem 1rem 1rem 0;
   background-color: #FFFFFF;
   border-radius: 8px;
