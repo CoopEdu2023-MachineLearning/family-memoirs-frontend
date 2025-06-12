@@ -17,12 +17,18 @@ const Header = ({ onAuthButtonClick, isLoggedIn }) => {
     }
   };
 
+  const handleLogoClick = () => {
+    navigate('/home');
+  };
+
   return (
     <div className={isMyPage ? styles.headerMyPage : styles.header}>
       <img 
         src='/logo.svg' 
         alt="logo" 
         className={isMyPage ? styles.logoSmall : styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: 'pointer' }}
       />
       <div className={styles.topBar}>
         <div>购买实体专辑</div>
