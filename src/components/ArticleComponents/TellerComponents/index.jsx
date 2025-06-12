@@ -19,7 +19,7 @@ export default function TellerComponents({ teller, uploaderName }) {
                     <h2 className={styles.name}>{teller.nameOld}</h2>
                 </div>
                 {uploaderName && <UserDetails name={uploaderName} />}
-                <p className={styles.intro}>{teller.introOld}</p>
+                <div className={styles.intro}>{teller.introOld}</div>
             </div>
         );
     }

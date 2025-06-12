@@ -1,0 +1,20 @@
+.searchBox {
+  width: 100%;
+  max-width: 400px;
+}
+
+.suggestionPanel {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tag {
+  user-select: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 15px;
+  padding: 3px 12px;
+}
+
+/*# sourceMappingURL=index.module.css.map */

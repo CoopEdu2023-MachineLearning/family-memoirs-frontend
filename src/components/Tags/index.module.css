@@ -1,0 +1,34 @@
+@charset "UTF-8";
+.root :global .tags {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+.root :global .tags1 {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+.root :global .tags2 {
+  display: flex;
+  justify-content: end;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 200px; /* 设定一个固定宽度，例如 300px */
+}
+.root :global .tag {
+  padding: 10px 20px;
+  border: 0.5px solid var(----, rgba(0, 0, 0, 0.1));
+  border-radius: 999px;
+}
+.root :global .tagActive {
+  padding: 10px 20px;
+  color: #f0f0f0;
+  border: 0.5px solid var(----, rgba(0, 0, 0, 0.1));
+  border-radius: 999px;
+  background: var(----, rgba(0, 0, 0, 0.9));
+}
+
+/*# sourceMappingURL=index.module.css.map */

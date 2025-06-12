@@ -1,0 +1,47 @@
+.root {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.root :global .box {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  transition: opacity 0.5s ease;
+}
+.root :global .matched {
+  opacity: 1;
+}
+.root :global .matched::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.root :global .dimmed {
+  opacity: 0.1;
+}
+.root :global .time {
+  position: absolute;
+  left: 100%;
+  color: rgba(0, 0, 0, 0.5019607843);
+}
+.root :global .timeText {
+  position: absolute;
+  left: 50px;
+  bottom: 0;
+}
+.root :global .line {
+  background: rgba(0, 0, 0, 0.5019607843);
+  position: absolute;
+  bottom: 0.5px;
+  width: 85px;
+  height: 0.5px;
+}
+
+/*# sourceMappingURL=index.module.css.map */
