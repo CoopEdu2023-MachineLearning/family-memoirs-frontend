@@ -3,8 +3,8 @@
   font-family: "FZKai-Z03", serif;
 }
 .details__uploader {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 .details__name {
   text-decoration: underline;

@@ -1,7 +1,7 @@
 .articleContent {
   flex: 1;
-  line-height: 1.8;
-  font-size: 16px;
+  line-height: 150%;
+  font-size: 18px;
   font-family: FZKai-Z03, serif;
 }
 .articleContent p {
