@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import styles from './index.module.scss';
 import { useState } from "react";
-export function Card({ place, eventTag, tagOne, tagTwo }) {
+import { Typography } from 'antd';
+
+function Card({ articleId, place, eventTag, tagOne, tagTwo }) {
+
+  const { Link } = Typography;
+
   const getLocation = () => { };
   const getTags = () => { };
   const colors = ['#9A7E6F', '#C5CC9F', '#AB8F6D', '#42746A'];
@@ -22,15 +27,17 @@ export function Card({ place, eventTag, tagOne, tagTwo }) {
     }
   }, [place]);
   return (
-    <div className={styles.root} style={{ backgroundColor: randomColor }}>
-      <div className={styles.topText}>{location1}</div>
-      <div className={styles.middleText}>{location2}</div>
-      <div className={styles.bottomText}>{event}</div>
-      <div className={styles.bottomSection}>
-        <div className={styles.location}>{tag1}</div>
-        <div className={styles.status}>{tag2}</div>
+    <Link href={`/article/${articleId}`}>
+      <div className={styles.root} style={{ backgroundColor: randomColor }}>
+        <div className={styles.topText}>{location1}</div>
+        <div className={styles.middleText}>{location2}</div>
+        <div className={styles.bottomText}>{event}</div>
+        <div className={styles.bottomSection}>
+          <div className={styles.location}>{tag1}</div>
+          <div className={styles.status}>{tag2}</div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 export default Card;
