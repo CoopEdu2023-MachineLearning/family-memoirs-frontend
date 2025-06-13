@@ -27,7 +27,7 @@ const Header = ({ onAuthButtonClick, isLoggedIn }) => {
       {!isArticlePage && (
         <>
           <img
-            src='/logo.svg'
+            src='/logo1.svg'
             alt="logo"
             className={isMyPage ? styles.logoSmall : styles.logo}
             onClick={handleLogoClick}
