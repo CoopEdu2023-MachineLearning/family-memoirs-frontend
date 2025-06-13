@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import http from "@http";
 import { CloseOutlined } from '@ant-design/icons';
 
-const LoginComponents = ({ onSwitchToSignup, onSwitchToForgetPassword, onClose }) => {
+const LoginComponents = ({ onSwitchToSignup, onSwitchToForgetPassword, onClose, onLoginSuccess}) => {
   const { Title, Link, Text } = Typography;
   const [isAllowed, setIsAllowed] = React.useState(false);
   const [email, setEmail] = React.useState('');
@@ -38,7 +38,7 @@ const LoginComponents = ({ onSwitchToSignup, onSwitchToForgetPassword, onClose }
       message.success('登录成功');
       // 在handleLogin函数的成功处理中添加：
       if (onLoginSuccess) {
-        onLoginSuccess();
+        onLoginSuccess(token);
       }
       onClose(); // 添加这行来关闭弹窗
       navigate('/home');
