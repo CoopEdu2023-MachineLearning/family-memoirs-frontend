@@ -27,7 +27,10 @@ function Card({ articleId, place, eventTag, tagOne, tagTwo }) {
     }
   }, [place]);
   return (
-    <Link href={`/article/${articleId}`}>
+    <Link
+      href={`/article/${articleId}`}
+      style={{ color: 'inherit', textDecoration: 'none' }}
+    >
       <div className={styles.root} style={{ backgroundColor: randomColor }}>
         <div className={styles.topText}>{location1}</div>
         <div className={styles.middleText}>{location2}</div>

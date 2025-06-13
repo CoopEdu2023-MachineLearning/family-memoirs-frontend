@@ -6,6 +6,7 @@ const Header = ({ onAuthButtonClick, isLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMyPage = location.pathname !== '/memoirs';
+  const isArticlePage = location.pathname.includes('/article/');
 
   const handleMyClick = () => {
     if (isLoggedIn) {
@@ -23,20 +24,24 @@ const Header = ({ onAuthButtonClick, isLoggedIn }) => {
 
   return (
     <div className={isMyPage ? styles.headerMyPage : styles.header}>
-      <img
-        src='/logo.svg'
-        alt="logo"
-        className={isMyPage ? styles.logoSmall : styles.logo}
-        onClick={handleLogoClick}
-        style={{ cursor: 'pointer' }}
-      />
-      <div className={styles.topBar}>
-        <div>购买实体专辑</div>
-        <div>关于我们</div>
-        <div onClick={handleMyClick} key={isLoggedIn ? 'logged-in' : 'logged-out'}>
-          {isLoggedIn ? '我的' : '登录/注册'}
-        </div>
-      </div>
+      {!isArticlePage && (
+        <>
+          <img
+            src='/logo.svg'
+            alt="logo"
+            className={isMyPage ? styles.logoSmall : styles.logo}
+            onClick={handleLogoClick}
+            style={{ cursor: 'pointer' }}
+          />
+          <div className={styles.topBar}>
+            <div>购买实体专辑</div>
+            <div>关于我们</div>
+            <div onClick={handleMyClick} key={isLoggedIn ? 'logged-in' : 'logged-out'}>
+              {isLoggedIn ? '我的' : '登录/注册'}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
