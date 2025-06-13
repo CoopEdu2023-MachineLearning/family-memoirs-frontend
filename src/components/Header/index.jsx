@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 const Header = ({ onAuthButtonClick, isLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isMyPage = location.pathname === '/my';
+  const isMyPage = location.pathname !== '/memoirs';
 
   const handleMyClick = () => {
     if (isLoggedIn) {
@@ -23,9 +23,9 @@ const Header = ({ onAuthButtonClick, isLoggedIn }) => {
 
   return (
     <div className={isMyPage ? styles.headerMyPage : styles.header}>
-      <img 
-        src='/logo.svg' 
-        alt="logo" 
+      <img
+        src='/logo.svg'
+        alt="logo"
         className={isMyPage ? styles.logoSmall : styles.logo}
         onClick={handleLogoClick}
         style={{ cursor: 'pointer' }}
