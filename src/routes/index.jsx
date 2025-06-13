@@ -8,6 +8,8 @@ import WaterfallPage from "@pages/WaterfallPage/index.jsx";
 import { SearchResultsPage } from "@pages/SearchResultsPage";
 import ArticlePage from "@pages/ArticlePage/index.jsx";
 import MyPage from "@pages/MyPage/index.jsx";
+import TellerCreation from '@components/TellerCreation/index.jsx'
+
 
 const routes = [
   {
@@ -15,11 +17,7 @@ const routes = [
     element: <Layout />,
     children: [
       {
-        index: true,
-        element: <Navigate to='/home' replace />,
-      },
-      {
-        path: '/home',
+        path: '/memoirs',
         element: <HomePage />
       },
       {
@@ -37,6 +35,10 @@ const routes = [
       {
         path: '/article/:id',
         element: <ArticlePage />
+      },
+      {
+        path:'/demo',
+        element:<TellerCreation/>
       }
     ]
   },

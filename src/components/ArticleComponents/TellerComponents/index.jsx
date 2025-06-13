@@ -11,7 +11,7 @@ export default function TellerComponents({ teller, uploaderName }) {
                 <div className={styles.header}>
                     {teller.avatarUrlOld && (
                         <img
-                            src={`http://localhost:8080/teller/avatar${teller.avatarUrlOld}`}
+                            src={`/teller/avatar${teller.avatarUrlOld}`}
                             alt={teller.nameOld}
                             className={styles.avatar}
                         />

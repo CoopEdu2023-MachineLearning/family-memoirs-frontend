@@ -167,7 +167,7 @@ const MyPage = () => {
                     <div className={styles.tellerAvatar}>
                       {teller.avatarUrlOld ? (
                         <img 
-                          src={`http://localhost:8080/teller/avatar${teller.avatarUrlOld}`} 
+                          src={`/teller/avatar${teller.avatarUrlOld}`} 
                           alt={teller.nameOld}
                         />
                       ) : (
