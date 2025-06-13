@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path';
+import { resolve } from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -15,6 +14,17 @@ export default defineConfig({
       '@hooks': resolve(__dirname, './src/hooks'),
       '@features': resolve(__dirname, './src/features'),
       '@utils': resolve(__dirname, './src/utils'),
-    },
+    }
   },
+  build: {
+    rollupOptions: {
+      input: {
+        memoir: resolve(__dirname, 'memoirs.html')
+      }
+    }
+  },
+  server: {
+    open: '/memoirs.html',
+    historyApiFallback: '/memoirs.html'  // ✅ 关键：让 React Router 的路径回退到入口
+  }
 })

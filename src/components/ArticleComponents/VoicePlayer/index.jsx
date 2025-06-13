@@ -133,7 +133,7 @@ export default function VoiceComponents({ audioList }) {
             </div>
             <audio
                 ref={el => { audioRefs.current[selected.id] = el; }}
-                src={`http://localhost:8080${selected.audioUrl}`}
+                src={`${selected.audioUrl}`}
                 onTimeUpdate={() => handleTimeUpdate(selected.id)}
                 onEnded={() => handleEnded(selected.id)}
             />

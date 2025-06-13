@@ -6,12 +6,20 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
     const formatDateAndLocation = () => {
         // 只有起始年代
         if (era && !startYear && !endYear && !startMonth && !endMonth) {
-            return `${String(era).substring(2, 4)}年代 ${location}`;
+            return(
+                <>
+                    <span className={styles.digits}>{String(era).substring(2, 4)}</span>年代 {location}
+                </>
+            )
         }
 
         // 只有起始年
         if (startYear && !endYear && !startMonth && !endMonth) {
-            return `${startYear}年 ${location}`;
+            return (
+                <>
+                    <span className={styles.digits}>{startYear}</span>年 {location}
+                </>
+            );
         }
 
         // 起始年和结束年
@@ -19,7 +27,7 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
             return (
                 <>
                     <div className={styles.date_style1}>
-                        <div>{startYear}年-{endYear}年</div>
+                        <div><span className={styles.digits}>{startYear}</span>年-<span className={styles.digits}>{endYear}</span>年</div>
                         <div>{location}</div>
                     </div>
                 </>
@@ -30,7 +38,7 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
         if (startYear && startMonth && !endYear && !endMonth) {
             return (
                 <div className={styles.date_style1}>
-                    <div>{startYear}年{startMonth}月</div>
+                    <div><span className={styles.digits}>{startYear}</span>年<span className={styles.digits}>{startMonth}</span>月</div>
                     <div>{location}</div>
                 </div>
             );
@@ -41,16 +49,19 @@ function TitleComponents({era, location, startYear, endYear, startMonth, endMont
             if (startYear === endYear) {
                 return (
                     <div className={styles.date_style2}>
-                        <div>{startYear}年{startMonth}月-{endMonth}月</div>
+                        <div><span className={styles.digits}>{startYear}</span>年<span className={styles.digits}>{startMonth}</span>月-<span className={styles.digits}>{endMonth}</span>月
+                        </div>
                         <div>{location}</div>
                     </div>
                 )
             } else {
                 return (
                     <div className={styles.date_style2}>
-                        <div>{startYear}年{startMonth}月</div>
+                        <div><span className={styles.digits}>{startYear}</span>年<span className={styles.digits}>{startMonth}</span>月
+                        </div>
                         <div className={styles.second_line}>至
-                            <div>{endYear}年{endMonth}月</div>
+                            <div><span className={styles.digits}>{endYear}</span>年<span className={styles.digits}>{endMonth}</span>月
+                            </div>
                         </div>
                         <div>{location}</div>
                     </div>

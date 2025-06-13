@@ -6,7 +6,7 @@ export const PrivateProtectedRoute = () => {
   return (
     isAuthenticated
       ? <Outlet />
-      : <Navigate to="/home" replace /> // 重定向到home页面而不是login页面
+      : <Navigate to="/memoirs" replace /> // 重定向到home页面而不是login页面
   );
 };
 
@@ -14,7 +14,7 @@ export const PublicProtectedRoute = () => {
   const isAuthenticated = !!localStorage.getItem('token');
   return (
     isAuthenticated
-      ? <Navigate to="/home" replace />
+      ? <Navigate to="/memoirs" replace />
       : <Outlet />
   );
 };

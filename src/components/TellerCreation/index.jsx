@@ -117,7 +117,6 @@ const App = () => {
         }));
     };
 
-    const userId = 2;
 
     const relationOptions = [
         { label: '父亲', value: '父亲' },
@@ -141,21 +140,28 @@ const App = () => {
     ];
 
     useEffect(() => {
-        const fetchTellers = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/tellers?userId=${userId}`);
-                if (response.data.code === 0) {
-                    const tellers = response.data.data || [];
-                    const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
-                    setHasSelf(hasSelfTeller);
+    const fetchTellers = async () => {
+        try {
+            const token = localStorage.getItem('token'); // 从本地存储获取 token
+            const response = await axios.get('/teller/get', {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            } catch (error) {
-                message.error('获取讲述者列表失败：' + error.message);
-            }
-        };
+            });
 
-        fetchTellers();
-    }, []);
+            if (response.data.code === 0) {
+                const tellers = response.data.data || [];
+                const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
+                setHasSelf(hasSelfTeller);
+            }
+        } catch (error) {
+            message.error('获取讲述者列表失败：' + (error.response?.data?.message || error.message));
+        }
+    };
+
+    fetchTellers();
+}, []);
+
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -189,9 +195,8 @@ const App = () => {
 
         const birthdate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
         const birthplace = formData.township ? `${formData.province} ${formData.city} ${formData.township}` : `${formData.province} ${formData.city}`;
-
+        if(!hasSelf) formData.relationName = "我自己"
         const requestData = {
-            userId,
             nameNew: formData.nameNew,
             gender: formData.gender,
             birthplace,
@@ -202,38 +207,57 @@ const App = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/tellers', requestData);
-            if (response.data.code === 0) {
-                message.success('讲述者创建成功！');
-                setIsModalOpen(false);
-                setFormData({
-                    nameNew: '',
-                    gender: null,
-                    province: provinceData[0],
-                    city: cityData[provinceData[0]][0],
-                    township: '',
-                    birthdate: null,
-                    introNew: '',
-                    avatarNew: '',
-                    relationName: null
-                });
-                setYear(null);
-                setMonth(null);
-                setDay(null);
-                setImageUrl(null);
-                const tellersResponse = await axios.get(`http://localhost:8080/api/tellers?userId=${userId}`);
-                if (tellersResponse.data.code === 0) {
-                    const tellers = tellersResponse.data.data || [];
-                    const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
-                    setHasSelf(hasSelfTeller);
-                }
-            } else {
-                message.error(response.data.message || '创建失败！');
+    const token = localStorage.getItem('token'); // 假设你将 token 存在 localStorage
+
+    const response = await axios.post(
+        '/teller',
+        requestData,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-        } catch (error) {
-            message.error('创建失败：' + (error.response?.data?.message || error.message));
         }
-    };
+    );
+
+    if (response.data.code === 0) {
+        message.success('讲述者创建成功！');
+        setIsModalOpen(false);
+        setFormData({
+            nameNew: '',
+            gender: null,
+            province: provinceData[0],
+            city: cityData[provinceData[0]][0],
+            township: '',
+            birthdate: null,
+            introNew: '',
+            avatarNew: '',
+            relationName: null
+        });
+        setYear(null);
+        setMonth(null);
+        setDay(null);
+        setImageUrl(null);
+
+        const tellersResponse = await axios.get(
+            `/teller?userId=${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (tellersResponse.data.code === 0) {
+            const tellers = tellersResponse.data.data || [];
+            const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
+            setHasSelf(hasSelfTeller);
+        }
+    } else {
+        message.error(response.data.message || '创建失败！');
+    }
+} catch (error) {
+    message.error('创建失败：' + (error.response?.data?.message || error.message));
+}};
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -330,7 +354,7 @@ const App = () => {
                                 className="avatar-uploader"
                                 style={{ width: '150px', height: '150px' }}
                                 showUploadList={false}
-                                action="http://localhost:8080/upload"
+                                action="/upload"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
                             >

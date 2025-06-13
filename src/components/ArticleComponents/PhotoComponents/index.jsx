@@ -37,7 +37,7 @@ export default function PhotoComponents({photos}) {
                         <div className={styles.item} key={photo.id}>
                             <img
                                 className={styles.image}
-                                src={`http://localhost:8080${photo.imageUrl}`}
+                                src={`${photo.imageUrl}`}
                                 alt={`Photo ${photo.id}`}
                                 loading="lazy"
                                 onClick={() => setSelected(photo)}
@@ -53,7 +53,7 @@ export default function PhotoComponents({photos}) {
                         <div className={styles.item} key={photo.id}>
                             <img
                                 className={styles.image}
-                                src={`http://localhost:8080${photo.imageUrl}`}
+                                src={`${photo.imageUrl}`}
                                 alt={`Photo ${photo.id}`}
                                 loading="lazy"
                                 onClick={() => setSelected(photo)}
@@ -70,7 +70,7 @@ export default function PhotoComponents({photos}) {
             {selected && (
                 <div className={styles.lightbox}>
                     <img
-                        src={`http://localhost:8080${selected.imageUrl}`}
+                        src={`${selected.imageUrl}`}
                         alt={`Photo ${selected.id}`}
                         className={styles.lightboxImage}
                     />
