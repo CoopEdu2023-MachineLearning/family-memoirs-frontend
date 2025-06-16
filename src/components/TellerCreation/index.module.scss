@@ -2,8 +2,10 @@
   :global {
     .modal-content {
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
       padding: 16px;
+      min-height: 0; /* 确保内容自适应 */
     }
 
     .content-wrapper {
@@ -11,26 +13,71 @@
       align-items: flex-start;
       gap: 24px;
       width: 100%;
+      flex: 1;
+
+      @media (max-width: 768px) {
+        flex-direction: row;
+        gap: 12px;
+        justify-content: space-between;
+      }
     }
 
     .space {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
+      display: block;
+      margin-bottom: 12px;
     }
 
-    .select {
-      width: 110%;
+    .word {
+      width: 80px;
+      margin-right: 0;
+      text-align: left;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .unit {
+      width: 30px;
+      margin-right: 8px;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    .ant-input, .ant-select {
+      width: 100%;
+      min-width: 10vh;
+      max-width: 30vh;
+    }
+    .ant-input-textarea {
+      width: 100%;
+      min-width: 15vh;
+      max-width: 60vh;
+    }
+
+    .birthplace-space {
+      display: block;
+    }
+
+    .birthdate-space {
+      display: block;
     }
 
     .right {
       flex: 0 0 150px;
       text-align: center;
 
+      @media (max-width: 768px) {
+        flex: 0 0 150px;
+        order: 1; /* 左侧 */
+        margin-bottom: 0;
+      }
+
       .avatar-uploader {
         .ant-upload.ant-upload-select {
-          width: 225px !important;
-          height: 425px !important;
+          margin-top: 20px;
+          min-width: 25vw;
+          min-height: 25vw;
+          max-width: 200vw;
+          max-height: 200vw;
           border-radius: 8px;
         }
       }
@@ -46,33 +93,71 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+
+      @media (max-width: 768px) {
+        flex: 1;
+        order: 2; /* 右侧 */
+      }
     }
 
-    .word {
-      width: 80px;
-      margin-right: 8px;
-      text-align: left; /* 改为左对齐，确保每行第一个字符对齐 */
-      font-size: 14px;
+    .ant-modal-body {
+      max-height: 80vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .unit {
-      width: 30px;
-      margin-right: 8px;
-      font-size: 14px;
-    }
-
-    .ant-input, .ant-input-textarea {
-      width: 200px;
-    }
-
-    .birthdate-space {
-      align-items: center;
-      white-space: nowrap;
-    }
-
-    .input{
+    .modal-footer {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0;
       width: 100%;
+
+      @media (max-width: 768px) {
+        padding: 12px 0;
+      }
+
+      .createbutton {
+        width: 200px;
+      }
+    }
+
+    .identity-gender-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+    }
+
+    .birthplace-birthdate-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+    }
+
+    .addTownshipButton {
+      margin-top: 8px;
+      width: 100px;
+    }
+
+    .bigarea {
+      min-height: 13vh;
+      max-height: 38vh;
+      min-width: 80vh;
+      max-width: 140vh;
     }
   }
 }

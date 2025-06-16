@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Input, Space, Select, Upload, message, Typography } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { Flex } from 'antd';
 import styles from './index.module.scss';
 import axios from 'axios';
@@ -30,7 +30,7 @@ const App = () => {
     const uploadButton = (
         <button style={{ border: 0, background: 'none' }} type="button" className='button'>
             {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
+            <div style={{ marginTop: 8 }}>建议上传真实照片</div>
         </button>
     );
 
@@ -95,6 +95,7 @@ const App = () => {
     const [year, setYear] = useState(null);
     const [month, setMonth] = useState(null);
     const [day, setDay] = useState(null);
+    const [showTownship, setShowTownship] = useState(false);
 
     const years = Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 1900 + i);
     const yearOptions = years.map(y => ({ label: y.toString(), value: y }));
@@ -116,8 +117,6 @@ const App = () => {
             value: d
         }));
     };
-
-    const userId = 2;
 
     const relationOptions = [
         { label: '父亲', value: '父亲' },
@@ -143,14 +142,20 @@ const App = () => {
     useEffect(() => {
         const fetchTellers = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/tellers?userId=${userId}`);
+                const token = localStorage.getItem('token');
+                const response = await axios.get('/teller/get', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
                 if (response.data.code === 0) {
                     const tellers = response.data.data || [];
                     const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
                     setHasSelf(hasSelfTeller);
                 }
             } catch (error) {
-                message.error('获取讲述者列表失败：' + error.message);
+                message.error('获取讲述者列表失败：' + (error.response?.data?.message || error.message));
             }
         };
 
@@ -189,9 +194,8 @@ const App = () => {
 
         const birthdate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
         const birthplace = formData.township ? `${formData.province} ${formData.city} ${formData.township}` : `${formData.province} ${formData.city}`;
-
+        if(!hasSelf) formData.relationName = "我自己"
         const requestData = {
-            userId,
             nameNew: formData.nameNew,
             gender: formData.gender,
             birthplace,
@@ -202,7 +206,18 @@ const App = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/tellers', requestData);
+            const token = localStorage.getItem('token');
+
+            const response = await axios.post(
+                '/teller',
+                requestData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
             if (response.data.code === 0) {
                 message.success('讲述者创建成功！');
                 setIsModalOpen(false);
@@ -221,12 +236,7 @@ const App = () => {
                 setMonth(null);
                 setDay(null);
                 setImageUrl(null);
-                const tellersResponse = await axios.get(`http://localhost:8080/api/tellers?userId=${userId}`);
-                if (tellersResponse.data.code === 0) {
-                    const tellers = tellersResponse.data.data || [];
-                    const hasSelfTeller = tellers.some(teller => teller.identity === '我自己');
-                    setHasSelf(hasSelfTeller);
-                }
+                setShowTownship(false);
             } else {
                 message.error(response.data.message || '创建失败！');
             }
@@ -252,6 +262,7 @@ const App = () => {
         setMonth(null);
         setDay(null);
         setImageUrl(null);
+        setShowTownship(false);
     };
 
     const handleChange = info => {
@@ -294,20 +305,18 @@ const App = () => {
     };
 
     const identityField = hasSelf ? (
-        <Space>
-            <Input value="我自己" className='input' size='small' disabled />
-            <p>的</p>
+        <Space direction="vertical">
+            <Input value="我自己" className='input' size='small' disabled/>
             <Select
                 className='select'
                 value={formData.relationName}
                 onChange={value => handleInputChange('relationName', value)}
                 options={relationOptions}
                 placeholder="亲属关系"
-                style={{ width: 120 }}
             />
         </Space>
     ) : (
-        <Input value="我自己" disabled />
+        <Input value="我自己" disabled style={{width:"20px"}}/>
     );
 
     return (
@@ -316,11 +325,13 @@ const App = () => {
                 创建讲述者
             </Button>
 
-            <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={800} className={styles.root} footer={[
-                <Button key="upload" type="primary" onClick={handleOk}>
-                    上传
-                </Button>
-            ]}>
+            <Modal
+                open={isModalOpen}
+                closeIcon={<CloseOutlined onClick={handleCancel} />}
+                width={750}
+                className={styles.root}
+                footer={null}
+            >
                 <div className="modal-content">
                     <Flex gap="middle" align="flex-start" className="content-wrapper">
                         <div className='right'>
@@ -330,58 +341,70 @@ const App = () => {
                                 className="avatar-uploader"
                                 style={{ width: '150px', height: '150px' }}
                                 showUploadList={false}
-                                action="http://localhost:8080/upload"
+                                action="/upload"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
                             >
                                 {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : uploadButton}
                             </Upload>
-                            <p className='avatar-reminder'>上传头像</p>
-                            <p>一条说明：鼓励用户上传真实照片</p>
                         </div>
 
                         <div className='left'>
-                            <Space className='space'>
-                                <p className='word'>讲述者身份</p>
-                                {identityField}
-                            </Space>
+                            <Flex gap="middle" align="center" className="identity-gender-row">
+                                <Space className='space'>
+                                    <p className='word'>讲述者身份</p>
+                                    {identityField}
+                                </Space>
+                                <Space className='space'>
+                                    <p className='word'>性别</p>
+                                    <Select className='select' value={formData.gender} onChange={value => handleInputChange('gender', value)} options={[
+                                        { value: '男', label: '男' },
+                                        { value: '女', label: '女' }
+                                    ]} />
+                                </Space>
+                            </Flex>
 
                             <Space className='space'>
                                 <p className='word'>真实姓名</p>
                                 <Input value={formData.nameNew} onChange={e => handleInputChange('nameNew', e.target.value)} />
                             </Space>
-                            <Space className='space'>
-                                <p className='word'>性别</p>
-                                <Select className='select' value={formData.gender} onChange={value => handleInputChange('gender', value)} options={[
-                                    { value: '男', label: '男' },
-                                    { value: '女', label: '女' }
-                                ]} />
-                            </Space>
-                            <Space className='space'>
-                                <p className='word'>出生地</p>
-                                <Select className='select' value={formData.province} onChange={handleProvinceChange} options={provinceData.map(province => ({ label: province, value: province }))} />
-                                <p className='unit'>省</p>
-                                <Select className='select' value={formData.city} onChange={onSecondCityChange} options={cityData[formData.province].map(city => ({ label: city, value: city }))} />
-                                <p className='unit'>市</p>
-                                <Input placeholder='乡（选填）' className='input' size='small' value={formData.township} onChange={handleTownshipChange} />
-                                <p className='unit'>乡</p>
-                            </Space>
-                            <Space className='space birthdate-space'>
-                                <p className='word'>出生日期</p>
-                                <Select className='select' style={{ width: 100 }} value={year} onChange={value => setYear(value)} placeholder="年" options={yearOptions} />
-                                <p className='unit'>年</p>
-                                <Select className='select' style={{ width: 80 }} value={month} onChange={value => setMonth(value)} placeholder="月" options={monthOptions} />
-                                <p className='unit'>月</p>
-                                <Select className='select' style={{ width: 80 }} value={day} onChange={value => setDay(value)} placeholder="日" options={getDayOptions(year, month)} />
-                                <p className='unit'>日</p>
-                            </Space>
-                            <Link href="https://gonglinongli.bmcx.com/" target="_blank">农历阴历转换器</Link>
-                            <Space className='space'>
-                                <p className='word'>简介</p>
-                                <TextArea rows={2} maxLength={300} showCount value={formData.introNew} onChange={e => handleInputChange('introNew', e.target.value)} />
-                            </Space>
+
+                            <Flex gap="middle" align="center" className="birthplace-birthdate-row">
+                                <Space className='space birthplace-space' direction="vertical">
+                                    <p className='word'>出生地</p>
+                                    <Space direction="vertical">
+                                        <Select className='select' value={formData.province} onChange={handleProvinceChange} options={provinceData.map(province => ({ label: province, value: province }))} />
+                                        <Select className='select' value={formData.city} onChange={onSecondCityChange} options={cityData[formData.province].map(city => ({ label: city, value: city }))} />
+                                        {showTownship && (
+                                            <Input placeholder='乡（选填）' className='input' size='small' value={formData.township} onChange={handleTownshipChange} />
+                                        )}
+                                        {!showTownship && (
+                                            <Button icon={<PlusOutlined />} onClick={() => setShowTownship(true)} className={styles.addTownshipButton}>
+                                                添加
+                                            </Button>
+                                        )}
+                                    </Space>
+                                </Space>
+                                <Space className='space birthdate-space' direction="vertical">
+                                    <p className='word'>出生日期</p>
+                                    <Space direction="vertical">
+                                        <Select className='select' style={{ width: 100 }} value={year} onChange={value => setYear(value)} placeholder="年" options={yearOptions} />
+                                        <Select className='select' style={{ width: 80 }} value={month} onChange={value => setMonth(value)} placeholder="月" options={monthOptions} />
+                                        <Select className='select' style={{ width: 80 }} value={day} onChange={value => setDay(value)} placeholder="日" options={getDayOptions(year, month)} />
+                                    </Space>
+                                </Space>
+                            </Flex>
                         </div>
                     </Flex>
+                    <Space className='space'>
+                                <p className='word'>简介</p>
+                                <TextArea rows={2} maxLength={300} showCount value={formData.introNew} onChange={e => handleInputChange('introNew', e.target.value)}  className='bigarea'/>
+                            </Space>
+                    <div className="modal-footer">
+                        <Button shape='round' type="primary" onClick={handleOk} className='createbutton' color='default' variant='solid'>
+                            创建讲述者
+                        </Button>
+                    </div>
                 </div>
             </Modal>
         </>
