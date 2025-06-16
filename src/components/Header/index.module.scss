@@ -15,13 +15,16 @@
   width: 156.183px;
   height: 112px;
   flex-shrink: 0;
-  transition: all 0.3s ease; /* 添加过渡动画 */
+  transition: all 0.3s ease;
+  /* 添加过渡动画 */
 }
 
 /* MyPage页面时的logo样式 */
 .logoSmall {
-  width: 60px; /* 缩小的logo宽度 */
-  height: 43px; /* 按比例缩小的高度 */
+  width: 60px;
+  /* 缩小的logo宽度 */
+  height: 43px;
+  /* 按比例缩小的高度 */
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
@@ -31,7 +34,8 @@
   z-index: 10;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* 改为center让logo和topBar在同一行 */
+  align-items: center;
+  /* 改为center让logo和topBar在同一行 */
   position: fixed;
   width: 100vw;
   top: 40px;
@@ -50,11 +54,24 @@
   flex-shrink: 0;
 }
 
-.topBar > div {
+.topBar>div {
   cursor: pointer;
   pointer-events: auto;
 }
 
-.topBar > div:hover {
+.topBar>div:hover {
   color: rgba(0, 0, 0, 0.8);
+}
+
+.searchContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  display: flex;
+  pointer-events: auto;
 }

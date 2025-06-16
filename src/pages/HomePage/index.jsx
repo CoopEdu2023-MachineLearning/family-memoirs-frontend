@@ -1,27 +1,16 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DiagonalScrollAnimation from '@components/DiagonalScrollAnimation';
 import styles from './index.module.scss';
 import { Tags } from "@components/Tags/index.jsx";
 import LoginComponents from "@components/LoginComponents/index.jsx";
 import SignUp from "@components/SignUp/index.jsx";
 import Header from "@components/Header/index.jsx";
-import { AutoCompleteSearch } from "@components/SearchBox";
-import { searchApi } from '@apis';
 import ForgetPwdModel from "@components/ForgetPwdModel/index.jsx";
 
 const HomePage = () => {
   const [filterTags, setFilterTags] = useState([]);
   const [homePageState, setHomePageState] = useState('homePage');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const [stories, setStories] = useState([]);
-  const [tellers, setTellers] = useState([]);
-
-  const refine = useCallback(async (value) => {
-    const { stories, tellers } = await searchApi(value, 15);
-    setStories(stories);
-    setTellers(tellers);
-  }, []);
 
   // 检查JWT token是否存在
   useEffect(() => {
@@ -55,10 +44,6 @@ const HomePage = () => {
         onAuthButtonClick={handleAuthButtonClick}
         isLoggedIn={isLoggedIn}
       />
-
-      <div className={styles.searchContainer}>
-        <AutoCompleteSearch stories={stories} tellers={tellers} refine={refine} />
-      </div>
 
       {homePageState === 'homePage' &&
         <>
