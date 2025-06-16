@@ -1,9 +1,9 @@
-import { AutoComplete, Flex, List, Space, Tag, Typography, Input } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { AutoComplete, Card, Flex, List, Space, Tag, Typography, Input } from "antd";
+import { DeleteOutlined, SearchOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { highlightTeller, highlightStory } from "@features/search/searchUtils";
 import { useSearch } from "@features/search/useSearch";
 import { getSearchHistory, removeFromHistory } from "@features/search/searchHistory";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import styles from "./index.module.scss";
 
@@ -27,7 +27,8 @@ const SearchHistory = ({ history, onSelect, onDelete }) => {
           }}
         />
       </Space>
-      <Space wrap>
+      <Space size={4} wrap>
+        {/* Antd tags have automatic margin-inline-end of 8px */}
         {history.map((item) => (
           <Tag
             key={item}
@@ -111,52 +112,79 @@ const SuggestionPanel = ({ stories, tellers, inputValue, onSelect, onStorySelect
     }));
 
   return (
-    <Space direction="vertical" className={styles.suggestionPanel}>
-      {inputValue ? (
-        <>
-          <ListOptionGroup
-            title="内容"
-            dataSource={renderedStories}
-            emptyMessage="暂无结果"
+    <Card
+      className={styles.panel}
+      styles={{ body: { padding: 0 } }}
+      onMouseDown={(e) => e.preventDefault()}
+    >
+      <Space direction="vertical" className={styles.panelContent}>
+        {inputValue ? (
+          <>
+            <ListOptionGroup
+              title="内容"
+              dataSource={renderedStories}
+              emptyMessage="暂无结果"
+            />
+            <ListOptionGroup
+              title="人物"
+              dataSource={renderedTellers}
+              emptyMessage="暂无结果"
+            />
+          </>
+        ) : (
+          <SearchHistory
+            history={history}
+            onSelect={onSelect}
+            onDelete={handleDelete}
           />
-          <ListOptionGroup
-            title="人物"
-            dataSource={renderedTellers}
-            emptyMessage="暂无结果"
-          />
-        </>
-      ) : (
-        <SearchHistory
-          history={history}
-          onSelect={onSelect}
-          onDelete={handleDelete}
-        />
-      )}
-    </Space>
+        )}
+      </Space>
+    </Card>
   );
 };
 
 export const AutoCompleteSearch = ({ stories, tellers, refine }) => {
   const { inputValue, handleChange, handleSearch } = useSearch(refine, "");
   const navigate = useNavigate();
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
 
   return (
-    <AutoComplete
-      className={styles.searchBox}
-      options={[{ value: 0, label: "" }] /* seems that this is required for the panel to render */}
-      popupRender={() => <SuggestionPanel stories={stories} tellers={tellers} inputValue={inputValue} onSelect={handleSearch} onStorySelect={(id) => {
-        navigate(`/article/${id}`);
-      }} />}
-      onSelect={handleSearch}
-      onChange={handleChange}
-      value={inputValue}
-    >
-      <Input.Search
-        placeholder="请输入关键词"
-        enterButton
-        onSearch={handleSearch}
-        size="large"
-      />
-    </AutoComplete>
+    <div className={styles.root}>
+      <div className={styles.headerRow}>
+        <div
+          className={styles.inputWrapper}
+          onMouseDown={e => e.preventDefault()}
+        >
+          <Input
+            ref={inputRef}
+            placeholder="请输入关键词"
+            prefix={<SearchOutlined />}
+            className={styles.searchInput}
+            onPressEnter={() => handleSearch(inputValue)}
+            onChange={(e) => handleChange(e.target.value)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        </div>
+        <img
+          className={styles.floatingButton}
+          src="/homePageStateButton/stateButtonDrawer.svg"
+          alt="State Button Drawer"
+        />
+      </div>
+      {isFocused && (
+        <SuggestionPanel
+          stories={stories}
+          tellers={tellers}
+          inputValue={inputValue}
+          onSelect={(query) => handleSearch(query)}
+          onStorySelect={(id) => navigate(`/article/${id}`)}
+        />
+      )}
+    </div>
   );
 };
